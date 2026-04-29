@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pra quando você esquecer</title>
+
+  <style>
+    :root {
+      --bg-1: #12091f;
+      --bg-2: #1a102d;
+      --bg-3: #3b1c68;
+      --purple: #7c3aed;
+      --purple-2: #a855f7;
+      --purple-soft: #c4b5fd;
+      --pink-soft: #f0abfc;
+      --text: #f8f7ff;
+      --muted: rgba(248, 247, 255, 0.74);
+      --card-border: rgba(255, 255, 255, 0.20);
+      --shadow: rgba(10, 3, 24, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(240, 171, 252, 0.18), transparent 28%),
+        radial-gradient(circle at 78% 12%, rgba(124, 58, 237, 0.24), transparent 30%),
+        radial-gradient(circle at 50% 85%, rgba(196, 181, 253, 0.14), transparent 32%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2) 46%, var(--bg-3));
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.42) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(240, 171, 252, 0.34) 0 1px, transparent 1.5px);
+      background-size: 70px 70px, 115px 115px;
+      background-position: 0 0, 32px 48px;
+      animation: floatStars 18s linear infinite;
+      opacity: 0.35;
+    }
+
+    body::after {
+      background: radial-gradient(circle at center, transparent 0%, rgba(4, 1, 12, 0.28) 100%);
+    }
+
+    @keyframes floatStars {
+      from { transform: translateY(0); }
+      to { transform: translateY(-90px); }
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: clamp(18px, 4vw, 56px);
+    }
+
+    .screen {
+      width: min(100%, 980px);
+      display: none;
+      animation: fadeUp 720ms ease both;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .hero,
+    .panel,
+    .final-card {
+      border: 1px solid var(--card-border);
+      background: linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.055));
+      box-shadow: 0 30px 80px var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .hero {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      text-align: center;
+      padding: clamp(28px, 7vw, 64px);
+      border-radius: clamp(26px, 5vw, 42px);
+    }
+
+    .panel {
+      width: min(100%, 880px);
+      margin: 0 auto;
+      padding: clamp(24px, 5vw, 46px);
+      border-radius: clamp(26px, 5vw, 42px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 9px 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      color: var(--purple-soft);
+      background: rgba(255,255,255,0.08);
+      font-size: clamp(0.78rem, 1.7vw, 0.92rem);
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      font-size: clamp(2.25rem, 8vw, 5.2rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      margin-bottom: 22px;
+    }
+
+    .choice-title,
+    .final-card h2 {
+      font-size: clamp(2rem, 6.5vw, 4.2rem);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, var(--purple-soft), var(--pink-soft));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p,
+    .choice-subtitle,
+    .final-text {
+      color: var(--muted);
+      font-size: clamp(1rem, 2.3vw, 1.18rem);
+      line-height: 1.75;
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .opening-phrase {
+      margin-top: 18px;
+      color: rgba(248, 247, 255, 0.86);
+      font-size: clamp(0.98rem, 2vw, 1.08rem);
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      color: var(--text);
+    }
+
+    .btn {
+      min-height: 48px;
+      padding: 13px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, opacity 180ms ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple), var(--purple-2) 48%, #d946ef);
+      box-shadow: 0 16px 36px rgba(124, 58, 237, 0.34);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.20);
+    }
+
+    .btn-ghost {
+      min-height: 38px;
+      padding: 9px 14px;
+      font-size: 0.9rem;
+      color: rgba(248, 247, 255, 0.76);
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      box-shadow: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .choice-card {
+      width: 100%;
+      min-height: 128px;
+      text-align: left;
+      padding: 20px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.16);
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .choice-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .choice-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      background: rgba(196, 181, 253, 0.14);
+      font-size: 1.25rem;
+    }
+
+    .choice-card span {
+      display: block;
+      color: var(--purple-soft);
+      font-size: 0.82rem;
+      margin-bottom: 6px;
+    }
+
+    .choice-card strong {
+      display: block;
+      line-height: 1.28;
+      font-size: clamp(1rem, 2vw, 1.08rem);
+    }
+
+    .choice-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .card-wrap {
+      width: min(100%, 680px);
+      margin: 0 auto;
+    }
+
+    .progress-area {
+      margin-bottom: 18px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: rgba(248,247,255,0.70);
+      font-size: 0.92rem;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 12.5%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--purple-soft), var(--pink-soft));
+      transition: width 450ms ease;
+    }
+
+    .memory-card {
+      position: relative;
+      min-height: clamp(430px, 64vh, 560px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(24px, 5vw, 46px);
+      border: 1px solid var(--card-border);
+      border-radius: clamp(28px, 5vw, 44px);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06)),
+        radial-gradient(circle at 18% 15%, rgba(240,171,252,0.12), transparent 35%);
+      box-shadow: 0 30px 90px var(--shadow);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
+      animation: cardIn 560ms ease both;
+    }
+
+    .memory-card::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -70px;
+      top: -70px;
+      border-radius: 50%;
+      background: rgba(240,171,252,0.14);
+      filter: blur(2px);
+    }
+
+    .memory-card::after {
+      content: "♡";
+      position: absolute;
+      right: clamp(22px, 5vw, 38px);
+      bottom: clamp(18px, 4vw, 28px);
+      color: rgba(255,255,255,0.13);
+      font-size: clamp(4rem, 14vw, 8rem);
+      line-height: 1;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(22px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-kicker {
+      color: var(--pink-soft);
+      font-weight: 700;
+      font-size: clamp(0.82rem, 1.6vw, 0.94rem);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: clamp(1.85rem, 6vw, 3.25rem);
+      line-height: 1.03;
+      letter-spacing: -0.045em;
+      margin-bottom: 24px;
+    }
+
+    .card-message {
+      color: rgba(248, 247, 255, 0.84);
+      font-size: clamp(1.02rem, 2.45vw, 1.22rem);
+      line-height: 1.78;
+      white-space: pre-line;
+      max-width: 560px;
+    }
+
+    .card-actions {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .icon-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+
+    .icon-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .icon-btn:not(:disabled):hover {
+      transform: translateY(-2px);
+    }
+
+    .final-screen {
+      text-align: center;
+    }
+
+    .final-card {
+      width: min(100%, 780px);
+      margin: 0 auto;
+      padding: clamp(30px, 6vw, 58px);
+      border-radius: clamp(28px, 5vw, 44px);
+    }
+
+    .secret-tag {
+      color: var(--pink-soft);
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        min-height: 100svh;
+        padding: 18px;
+      }
+
+      .hero,
+      .panel,
+      .final-card {
+        padding: 28px 20px;
+      }
+
+      .choice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .memory-card {
+        min-height: 66svh;
+      }
+
+      .card-actions {
+        grid-template-columns: 48px 1fr;
+      }
+
+      .card-actions .back-options {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
+
+      .card-actions .btn-primary {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 980px) {
+      .choice-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .memory-card {
+        min-height: 540px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    .photo-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.photo-carousel img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: blur(8px) brightness(0.5);
+  transition: opacity 1.8s ease;
+}
+
+.photo-carousel img.active {
+  opacity: 0.35;
+}
+
+/* garante que o conteúdo fique acima das fotos */
+.final-card > *:not(.photo-carousel) {
+  position: relative;
+  z-index: 1;
+}
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <section id="startScreen" class="screen active">
+      <div class="hero">
+        <div class="eyebrow">♡ um lembrete só seu</div>
+        <h1><span class="gradient-text">Um cantinho para Você</span></h1>
+        <p>
+          Oii, Rayssa.<br><br>
+          Esse site não é por nenhuma data especial. Não é aniversário, não é comemoração, não é desculpa para nada e nem por nada.<br><br>
+          É só porque às vezes eu acho que você merece ser lembrada do quanto é especial e importante.
+        </p>
+        <br></br>
+
+        <p class="opening-phrase" id="openingPhrase"></p>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="startBtn">começar</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="choiceScreen" class="screen">
+      <div class="panel">
+        <h2 class="choice-title"><span class="gradient-text">O que seu coração precisa hoje?</span></h2>
+        <p class="choice-subtitle">
+          Escolhe um lembrete que combine com o seu agora. Ou, se quiser, lê tudo em sequência.
+        </p>
+
+        <div class="choice-grid" id="choiceGrid"></div>
+
+        <div class="choice-footer">
+          <button class="btn btn-primary" id="readAllBtn">ler todos em sequência</button>
+          <button class="btn btn-ghost" id="surpriseBtn">me surpreenda</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="cardScreen" class="screen">
+      <div class="card-wrap">
+        <div class="progress-area">
+          <div class="progress-top">
+            <span id="counter">1 de 8</span>
+            <span id="modeLabel">abra com carinho</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <article class="memory-card" id="memoryCard">
+          <div class="card-content">
+            <div class="card-kicker" id="cardKicker">lembrete 01</div>
+            <h2 class="card-title" id="cardTitle"></h2>
+            <p class="card-message" id="cardMessage"></p>
+          </div>
+
+          <div class="card-actions">
+            <button class="icon-btn" id="prevBtn" aria-label="Lembrete anterior">←</button>
+            <button class="btn btn-primary" id="nextBtn">próximo lembrete</button>
+            <button class="btn btn-secondary back-options" id="backOptionsBtn">voltar às opções</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="finalScreen" class="screen final-screen">
+      <div class="final-card">
+
+      <div class="photo-carousel">
+        <img src="images/foto1.jpg">
+        <img src="images/foto2.jpg">
+        <img src="images/foto3.jpg">
+        <img src="images/foto4.jpg">
+      </div>
+        <div class="secret-tag">♡</div>
+        <div class="eyebrow">um último lembrete</div>
+        <h2><span class="gradient-text">Esse cantinho continua sendo seu</span></h2>
+        <p class="final-text">
+          Eu não fiz isso esperando uma data, um motivo ou uma resposta específica.
+          Fiz porque você merece ser lembrada do quanto é especial sem precisar pedir por isso.
+          <br><br>
+          Você pode voltar aqui quando quiser. Mas espero que, aos poucos, nem precise tanto.
+          Porque você merece lembrar disso sozinha também.
+        </p>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="restartBtn">começar de novo</button>
+          <button class="btn btn-secondary" id="backToChoicesFinalBtn">voltar aos lembretes</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const memories = [
+      {
+        icon: "✨",
+        short: "Quando você esquecer o quanto é linda",
+        title: "Abra quando esquecer o quão linda é",
+        message: `Eu queria que você pudesse se ver por um instante do jeito que eu te vejo.
+
+Não é só sobre aparência, mesmo você sendo linda. É sobre o jeito que você existe no mundo, como fala, sorri, olha, admira, pensa e sente.
+
+Você tem algo muito especial, e o mais bonito é que isso simplesmente acontece, sem esforço.`
+      },
+      {
+        icon: "🌙",
+        short: "Quando você sentir que não é o bastante",
+        title: "Abra quando o mundo estiver se fazendo duvidar",
+        message: `Você não precisa dar conta de tudo para ainda ser alguém incrível
+
+Mesmo nos dias em que você duvida de si, ainda existe tanta coisa bonita em você. Seu jeito, sua presença, sua energia, sua história.
+
+Você importa muito mais do que talvez perceba.`
+      },
+      {
+        icon: "☀️",
+        short: "Pra te arrancar um sorriso",
+        title: "Abra quando precisar sorrir",
+        message: `Tem algo no seu olhar que traz um brilho especial para o mundo. Não sei explicar direito, só sei que é especial.
+
+E sim, eu sei que isso parece meio bobo...
+
+Mas algumas das coisas mais verdadeiras que a gente sente acabam soando assim mesmo.`
+      },
+      {
+        icon: "👀",
+        short: "Quero te lembrar do que eu vejo em você",
+        title: "Abra quando quiser saber o que eu vejo em você",
+        message: `Vejo alguém linda — mas não de um jeito comum.
+
+Vejo alguém com detalhes que ficam na cabeça. Um jeito único de falar, de agir e reagir, de existir. Com um olhar especial.
+
+Vejo alguém que dá vontade de conhecer mais, cuidar mais e ter sempre por perto.`
+      },
+      {
+        icon: "🤍",
+        short: "Quando o dia estiver pessado",
+        title: "Abra quando estiver tendo um dia difícil",
+        message: `Ei… respira um pouquinho.
+
+Você não precisa resolver tudo agora. Não precisa estar bem o tempo todo. Não precisa carregar o mundo nas costas.
+
+Só queria que você lembrasse que você não está sozinha e que eu gosto muito e me sinto especial de ter você aqui.`
+      },
+      {
+        icon: "⭐",
+        short: "Se estiver se sentindo pequena",
+        title: "Abra quando esquecer que é importante",
+        message: `Você é importante — mesmo nos dias em que sente que não fez o suficiente.
+
+Não pelo que faz pelos outros. Não só pelo que entrega, ajuda ou aguenta.
+
+Você é importante simplesmente porque é você. E isso já é muita coisa.`
+      },
+      {
+        icon: "♡",
+        short: "Quero um carinho",
+        title: "Abra quando quiser um carinho",
+        message: `Queria poder te dar um abraço daqueles bem apertados que fazem o mundo ficar quieto por alguns segundos.
+
+Mas enquanto isso não é possivel... Te deixo um bilhete:
+
+Você é querida admiravél e muito especial pra mim. Nunca deixe de ser você mesma`
+      },
+      {
+        icon: "🎁",
+        short: "Um pequeno presente",
+        title: "Abra agora",
+        message: `Eu poderia ter esperado uma data especial para fazer isso.
+
+Mas achei mais bonito fazer do nada. Porque você não merece ser lembrada só em dias marcados.
+
+Você merece ser lembrada numa terça qualquer, no meio da rotina, sem motivo nenhum — só porque você merece...`
+      }
+    ];
+
+    const openingPhrases = [
+      "Hoje também é um bom dia para lembrar que você é especial.",
+      "Esse cantinho continua aqui sempre que você precisar.",
+      "Nem todo carinho precisa esperar uma data.",
+      "Algumas pessoas merecem lembretes bonitos no meio da rotina.",
+      "Tem dias em que a gente só precisa de um pouco de carinho.",
+      "Você não precisa se esforçar para merecer cuidado.",
+      "Às vezes, ser lembrada com carinho já muda o dia.",
+      "Volta aqui sempre que o mundo parecer pesado demais.",
+      "Você merece delicadeza até nos dias comuns.",
+      "Algumas coisas bonitas precisam ser ditas mais de uma vez.",
+      "Não é exagero lembrar alguém do quanto ela importa.",
+      "Talvez hoje você só precise respirar e receber um lembrete bom.",
+      "Você é mais especial do que imagina nos dias em que duvida disso.",
+      "Esse site é pequeno, mas foi feito com intenção.",
+      "Que esse lembrete encontre você no momento certo.",
+      "Você não precisa estar bem o tempo todo para continuar sendo incrível.",
+      "Tem beleza no seu jeito de existir.",
+      "Um carinho inesperado também é uma forma de cuidado.",
+      "Quando esquecer, volta aqui. Eu deixei algumas verdades guardadas.",
+      "Esse não é um presente de data marcada. É só um carinho no meio do caminho."
+    ];
+
+    const startScreen = document.getElementById("startScreen");
+    const choiceScreen = document.getElementById("choiceScreen");
+    const cardScreen = document.getElementById("cardScreen");
+    const finalScreen = document.getElementById("finalScreen");
+
+    const startBtn = document.getElementById("startBtn");
+    const readAllBtn = document.getElementById("readAllBtn");
+    const surpriseBtn = document.getElementById("surpriseBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const backOptionsBtn = document.getElementById("backOptionsBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const backToChoicesFinalBtn = document.getElementById("backToChoicesFinalBtn");
+
+    const choiceGrid = document.getElementById("choiceGrid");
+    const openingPhrase = document.getElementById("openingPhrase");
+    const memoryCard = document.getElementById("memoryCard");
+    const cardKicker = document.getElementById("cardKicker");
+    const cardTitle = document.getElementById("cardTitle");
+    const cardMessage = document.getElementById("cardMessage");
+    const counter = document.getElementById("counter");
+    const modeLabel = document.getElementById("modeLabel");
+    const progressFill = document.getElementById("progressFill");
+
+    let currentIndex = 0;
+    let sequenceMode = false;
+
+    function setOpeningPhrase() {
+      const randomIndex = Math.floor(Math.random() * openingPhrases.length);
+      openingPhrase.textContent = openingPhrases[randomIndex];
+    }
+
+    function showScreen(screen) {
+      [startScreen, choiceScreen, cardScreen, finalScreen].forEach((item) => item.classList.remove("active"));
+      screen.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderChoices() {
+      choiceGrid.innerHTML = memories.map((memory, index) => `
+        <button class="choice-card" type="button" data-index="${index}">
+          <div class="choice-icon">${memory.icon}</div>
+          <span>lembrete ${String(index + 1).padStart(2, "0")}</span>
+          <strong>${memory.short}</strong>
+        </button>
+      `).join("");
+
+      choiceGrid.querySelectorAll(".choice-card").forEach((button) => {
+        button.addEventListener("click", () => {
+          sequenceMode = false;
+          openCard(Number(button.dataset.index));
+        });
+      });
+    }
+
+    function renderCard() {
+      const memory = memories[currentIndex];
+      const number = String(currentIndex + 1).padStart(2, "0");
+
+      cardKicker.textContent = `${memory.icon} lembrete ${number}`;
+      cardTitle.textContent = memory.title;
+      cardMessage.textContent = memory.message;
+      counter.textContent = `${currentIndex + 1} de ${memories.length}`;
+      modeLabel.textContent = sequenceMode ? "lendo em sequência" : "lembrete escolhido";
+      progressFill.style.width = `${((currentIndex + 1) / memories.length) * 100}%`;
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.textContent = currentIndex === memories.length - 1
+        ? (sequenceMode ? "abrir último lembrete" : "voltar às opções")
+        : "próximo lembrete";
+
+      memoryCard.style.animation = "none";
+      memoryCard.offsetHeight;
+      memoryCard.style.animation = "cardIn 560ms ease both";
+    }
+
+    function openCard(index) {
+      currentIndex = index;
+      renderCard();
+      showScreen(cardScreen);
+    }
+
+    function openChoices() {
+      renderChoices();
+      showScreen(choiceScreen);
+    }
+
+    startBtn.addEventListener("click", () => {
+      openChoices();
+    });
+
+    readAllBtn.addEventListener("click", () => {
+      sequenceMode = true;
+      openCard(0);
+    });
+
+    surpriseBtn.addEventListener("click", () => {
+      sequenceMode = false;
+      const randomIndex = Math.floor(Math.random() * memories.length);
+      openCard(randomIndex);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < memories.length - 1) {
+        currentIndex += 1;
+        renderCard();
+        return;
+      }
+
+      if (sequenceMode) {
+        showScreen(finalScreen);
+      } else {
+        openChoices();
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex -= 1;
+        renderCard();
+      }
+    });
+
+    backOptionsBtn.addEventListener("click", () => {
+      sequenceMode = false;
+      openChoices();
+    });
+
+    restartBtn.addEventListener("click", () => {
+      sequenceMode = true;
+      openCard(0);
+    });
+
+    backToChoicesFinalBtn.addEventListener("click", () => {
+      sequenceMode = false;
+      openChoices();
+    });
+
+    setOpeningPhrase();
+    renderChoices();
+
+    const photos = document.querySelectorAll(".photo-carousel img");
+    let photoIndex = 0;
+
+    function showNextPhoto() {
+      if (!photos.length) return;
+
+      photos.forEach(p => p.classList.remove("active"));
+      photos[photoIndex].classList.add("active");
+
+      photoIndex = (photoIndex + 1) % photos.length;
+    }
+
+    setInterval(showNextPhoto, 4000);
+    showNextPhoto();
+
+  </script>
+</body>
+</html>
