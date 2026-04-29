@@ -523,13 +523,18 @@
   height: 100%;
   object-fit: cover; /* 🔥 garante que ocupa tudo */
   opacity: 0;
-  filter: blur(6px) brightness(0.45);
+  filter: blur(5px) brightness(0.8) saturate(1.1);
   transition: opacity 2.5s ease; /* transição mais suave */
 }
 
 .photo-carousel img.active {
   opacity: 0.4;
 }
+
+.photo-carousel {
+  pointer-events: none;
+}
+   
   </style>
 </head>
 
