@@ -462,7 +462,7 @@
       .hero,
       .panel,
       .final-card {
-        padding: 40px 20px;
+        padding: 28px 20px;
       }
 
       .choice-grid {
@@ -506,9 +506,11 @@
       }
     }
 
-    .photo-carousel {da
+.photo-carousel {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   overflow: hidden;
   border-radius: inherit;
@@ -516,22 +518,17 @@
 
 .photo-carousel img {
   position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* 🔥 garante que ocupa tudo */
   opacity: 0;
-  filter: blur(8px) brightness(0.5);
-  transition: opacity 1.8s ease;
+  filter: blur(6px) brightness(0.45);
+  transition: opacity 2.5s ease; /* transição mais suave */
 }
 
 .photo-carousel img.active {
-  opacity: 0.35;
-}
-
-/* garante que o conteúdo fique acima das fotos */
-.final-card > *:not(.photo-carousel) {
-  position: relative;
-  z-index: 1;
+  opacity: 0.4;
 }
   </style>
 </head>
@@ -889,7 +886,7 @@ Você merece ser lembrada numa terça qualquer, no meio da rotina, sem motivo ne
       photoIndex = (photoIndex + 1) % photos.length;
     }
 
-    setInterval(showNextPhoto, 4000);
+    setInterval(showNextPhoto, 5000);
     showNextPhoto();
 
   </script>
