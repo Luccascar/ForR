@@ -506,34 +506,89 @@
       }
     }
 
-.photo-carousel {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  overflow: hidden;
-  border-radius: inherit;
-}
+    .photo-carousel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    }
 
-.photo-carousel img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* 🔥 garante que ocupa tudo */
-  opacity: 0;
-  filter: blur(5px) brightness(0.70) saturate(1.1);
-  transition: opacity 2.5s ease; /* transição mais suave */
-}
+    .photo-carousel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 🔥 garante que ocupa tudo */
+    opacity: 0;
+    filter: blur(5px) brightness(0.70) saturate(1.1);
+    transition: opacity 2.5s ease; /* transição mais suave */
+    }
 
-.photo-carousel img.active {
-  opacity: 0.4;
-}
+    .photo-carousel img.active {
+    opacity: 0.4;
+    }
 
-.photo-carousel {
-  pointer-events: none;
-}
+    .photo-carousel {
+    pointer-events: none;
+    }
+
+    #floatingFormBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: white;
+
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+    z-index: 999;
+    transition: transform 0.2s ease;
+    }
+
+    #floatingFormBtn:hover {
+    transform: scale(1.08);
+    }
+
+    #floatingFormBtn {
+    animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.6); }
+    70% { box-shadow: 0 0 0 10px rgba(124,58,237,0); }
+    100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+    }
+
+    #secretBtn {
+    position: fixed;
+    bottom: 18px;
+    left: 20px; /* muda o canto aqui */
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+    }
+
+    #secretBtn:hover {
+    transform: scale(1.08);
+    background: rgba(255,255,255,0.15);
+    }
    
   </style>
 </head>
@@ -629,270 +684,400 @@
         </div>
       </div>
     </section>
+
+    <section id="formScreen" class="screen">
+  <div class="panel">
+    <h2 class="choice-title">
+      <span class="gradient-text">Um espacinho só seu</span>
+    </h2>
+
+    <p class="choice-subtitle">
+      Se quiser, pode me deixar um pedacinho do seu dia aqui.<br><br>
+      Pode ser algo bom, algo difícil ou só qualquer pensamento.
+      <br><br>
+      Eu vou ler com carinho 🤍
+    </p>
+
+    <form id="messageForm" action="https://formspree.io/f/xlgzjeda" method="POST">
+
+      <select name="tipo" required style="width:100%; margin-top:20px; padding:12px; border-radius:14px;">
+        <option value="">Escolhe o que quer dizer</option>
+        <option>💭 Quero desabafar</option>
+        <option>🤍 Algo que estou sentindo</option>
+        <option>✨ Um desejo</option>
+        <option>😔 Uma insegurança</option>
+        <option>😊 Algo bom que aconteceu</option>
+      </select>
+
+      <textarea 
+        name="mensagem" 
+        rows="6" 
+        placeholder="Pode escrever sem filtro…"
+        required
+        style="width:100%; margin-top:14px; padding:14px; border-radius:18px;">
+      </textarea>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">
+          enviar 💌
+        </button>
+
+        <button type="button" class="btn btn-secondary" id="backFromForm">
+          voltar
+        </button>
+      </div>
+
+      <p id="formSuccess" style="display:none; margin-top:18px;">
+        Recebi. Vou ler com carinho 🤍
+      </p>
+
+    </form>
+    </div>
+
+    <section id="secretScreen" class="screen">
+        <div class="panel" style="text-align:center;">
+            <img src="images/Foto5.png" alt="Segredo" style="max-width:100%; border-radius:20px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);" />
+
+            <div class="actions" style="margin-top: 24px;">
+                <button class="btn btn-secondary" id="backFromSecret">voltar</button>
+            </div>
+        </div>
+    </section>
+    
+            <p style="margin-bottom:20px; color: var(--muted);">
+        não era pra ser nada grande…<br>
+        só algo que eu quis guardar pra você
+        </p>
+
   </main>
 
+    <button id="floatingFormBtn">💌</button>
+    <button id="secretBtn" title="Área secreta">🔒</button>
+
   <script>
-    const memories = [
-      {
-        icon: "✨",
-        short: "Quando você esquecer o quanto é linda",
-        title: "Abra quando esquecer o quão linda é",
-        message: `Eu queria que você pudesse se ver por um instante do jeito que eu te vejo.
 
-Não é só sobre aparência, mesmo você sendo linda. É sobre o jeito que você existe no mundo, como fala, sorri, olha, admira, pensa e sente.
+        const formScreen = document.getElementById("formScreen");
+        const floatingFormBtn = document.getElementById("floatingFormBtn");
+        const backFromForm = document.getElementById("backFromForm");
+        const form = document.getElementById("messageForm");
+        const formSuccess = document.getElementById("formSuccess");
 
-Você tem algo muito especial, e o mais bonito é que isso simplesmente acontece, sem esforço.`
-      },
-      {
-        icon: "🌙",
-        short: "Quando você sentir que não é o bastante",
-        title: "Abra quando o mundo estiver se fazendo duvidar",
-        message: `Você não precisa dar conta de tudo para ainda ser alguém incrível
+        const secretScreen = document.getElementById("secretScreen");
+        const backFromSecret = document.getElementById("backFromSecret");
 
-Mesmo nos dias em que você duvida de si, ainda existe tanta coisa bonita em você. Seu jeito, sua presença, sua energia, sua história.
+        function openSecret() {
+        showScreen(secretScreen);
+        }
 
-Você importa muito mais do que talvez perceba.`
-      },
-      {
-        icon: "☀️",
-        short: "Pra te arrancar um sorriso",
-        title: "Abra quando precisar sorrir",
-        message: `Tem algo no seu olhar que traz um brilho especial para o mundo. Não sei explicar direito, só sei que é especial.
-
-E sim, eu sei que isso parece meio bobo...
-
-Mas algumas das coisas mais verdadeiras que a gente sente acabam soando assim mesmo.`
-      },
-      {
-        icon: "👀",
-        short: "Quero te lembrar do que eu vejo em você",
-        title: "Abra quando quiser saber o que eu vejo em você",
-        message: `Vejo alguém linda — mas não de um jeito comum.
-
-Vejo alguém com detalhes que ficam na cabeça. Um jeito único de falar, de agir e reagir, de existir. Com um olhar especial.
-
-Vejo alguém que dá vontade de conhecer mais, cuidar mais e ter sempre por perto.`
-      },
-      {
-        icon: "🤍",
-        short: "Quando o dia estiver pessado",
-        title: "Abra quando estiver tendo um dia difícil",
-        message: `Ei… respira um pouquinho.
-
-Você não precisa resolver tudo agora. Não precisa estar bem o tempo todo. Não precisa carregar o mundo nas costas.
-
-Só queria que você lembrasse que você não está sozinha e que eu gosto muito e me sinto especial de ter você aqui.`
-      },
-      {
-        icon: "⭐",
-        short: "Se estiver se sentindo pequena",
-        title: "Abra quando esquecer que é importante",
-        message: `Você é importante — mesmo nos dias em que sente que não fez o suficiente.
-
-Não pelo que faz pelos outros. Não só pelo que entrega, ajuda ou aguenta.
-
-Você é importante simplesmente porque é você. E isso já é muita coisa.`
-      },
-      {
-        icon: "♡",
-        short: "Quero um carinho",
-        title: "Abra quando quiser um carinho",
-        message: `Queria poder te dar um abraço daqueles bem apertados que fazem o mundo ficar quieto por alguns segundos.
-
-Mas enquanto isso não é possivel... Te deixo um bilhete:
-
-Você é querida admiravél e muito especial pra mim. Nunca deixe de ser você mesma`
-      },
-      {
-        icon: "🎁",
-        short: "Um pequeno presente",
-        title: "Abra agora",
-        message: `Eu poderia ter esperado uma data especial para fazer isso.
-
-Mas achei mais bonito fazer do nada. Porque você não merece ser lembrada só em dias marcados.
-
-Você merece ser lembrada numa terça qualquer, no meio da rotina, sem motivo nenhum — só porque você merece...`
-      }
-    ];
-
-    const openingPhrases = [
-      "Hoje também é um bom dia para lembrar que você é especial.",
-      "Esse cantinho continua aqui sempre que você precisar.",
-      "Nem todo carinho precisa esperar uma data.",
-      "Algumas pessoas merecem lembretes bonitos no meio da rotina.",
-      "Tem dias em que a gente só precisa de um pouco de carinho.",
-      "Você não precisa se esforçar para merecer cuidado.",
-      "Às vezes, ser lembrada com carinho já muda o dia.",
-      "Volta aqui sempre que o mundo parecer pesado demais.",
-      "Você merece delicadeza até nos dias comuns.",
-      "Algumas coisas bonitas precisam ser ditas mais de uma vez.",
-      "Não é exagero lembrar alguém do quanto ela importa.",
-      "Talvez hoje você só precise respirar e receber um lembrete bom.",
-      "Você é mais especial do que imagina nos dias em que duvida disso.",
-      "Esse site é pequeno, mas foi feito com intenção.",
-      "Que esse lembrete encontre você no momento certo.",
-      "Você não precisa estar bem o tempo todo para continuar sendo incrível.",
-      "Tem beleza no seu jeito de existir.",
-      "Um carinho inesperado também é uma forma de cuidado.",
-      "Quando esquecer, volta aqui. Eu deixei algumas verdades guardadas.",
-      "Esse não é um presente de data marcada. É só um carinho no meio do caminho."
-    ];
-
-    const startScreen = document.getElementById("startScreen");
-    const choiceScreen = document.getElementById("choiceScreen");
-    const cardScreen = document.getElementById("cardScreen");
-    const finalScreen = document.getElementById("finalScreen");
-
-    const startBtn = document.getElementById("startBtn");
-    const readAllBtn = document.getElementById("readAllBtn");
-    const surpriseBtn = document.getElementById("surpriseBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const prevBtn = document.getElementById("prevBtn");
-    const backOptionsBtn = document.getElementById("backOptionsBtn");
-    const restartBtn = document.getElementById("restartBtn");
-    const backToChoicesFinalBtn = document.getElementById("backToChoicesFinalBtn");
-
-    const choiceGrid = document.getElementById("choiceGrid");
-    const openingPhrase = document.getElementById("openingPhrase");
-    const memoryCard = document.getElementById("memoryCard");
-    const cardKicker = document.getElementById("cardKicker");
-    const cardTitle = document.getElementById("cardTitle");
-    const cardMessage = document.getElementById("cardMessage");
-    const counter = document.getElementById("counter");
-    const modeLabel = document.getElementById("modeLabel");
-    const progressFill = document.getElementById("progressFill");
-
-    let currentIndex = 0;
-    let sequenceMode = false;
-
-    function setOpeningPhrase() {
-      const randomIndex = Math.floor(Math.random() * openingPhrases.length);
-      openingPhrase.textContent = openingPhrases[randomIndex];
-    }
-
-    function showScreen(screen) {
-      [startScreen, choiceScreen, cardScreen, finalScreen].forEach((item) => item.classList.remove("active"));
-      screen.classList.add("active");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function renderChoices() {
-      choiceGrid.innerHTML = memories.map((memory, index) => `
-        <button class="choice-card" type="button" data-index="${index}">
-          <div class="choice-icon">${memory.icon}</div>
-          <span>lembrete ${String(index + 1).padStart(2, "0")}</span>
-          <strong>${memory.short}</strong>
-        </button>
-      `).join("");
-
-      choiceGrid.querySelectorAll(".choice-card").forEach((button) => {
-        button.addEventListener("click", () => {
-          sequenceMode = false;
-          openCard(Number(button.dataset.index));
+        backFromSecret.addEventListener("click", () => {
+        openChoices(); // volta pras opções
         });
-      });
-    }
 
-    function renderCard() {
-      const memory = memories[currentIndex];
-      const number = String(currentIndex + 1).padStart(2, "0");
+        // abrir form
+        floatingFormBtn.addEventListener("click", () => {
+        showScreen(formScreen);
+        });
 
-      cardKicker.textContent = `${memory.icon} lembrete ${number}`;
-      cardTitle.textContent = memory.title;
-      cardMessage.textContent = memory.message;
-      counter.textContent = `${currentIndex + 1} de ${memories.length}`;
-      modeLabel.textContent = sequenceMode ? "lendo em sequência" : "lembrete escolhido";
-      progressFill.style.width = `${((currentIndex + 1) / memories.length) * 100}%`;
+        // voltar
+        backFromForm.addEventListener("click", () => {
+        showScreen(startScreen);
+        });
 
-      prevBtn.disabled = currentIndex === 0;
-      nextBtn.textContent = currentIndex === memories.length - 1
-        ? (sequenceMode ? "abrir último lembrete" : "voltar às opções")
-        : "próximo lembrete";
+        // envio sem sair da página
+        form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-      memoryCard.style.animation = "none";
-      memoryCard.offsetHeight;
-      memoryCard.style.animation = "cardIn 560ms ease both";
-    }
+        const data = new FormData(form);
 
-    function openCard(index) {
-      currentIndex = index;
-      renderCard();
-      showScreen(cardScreen);
-    }
+        await fetch(form.action, {
+            method: "POST",
+            body: data,
+            headers: {
+            'Accept': 'application/json'
+            }
+        });
 
-    function openChoices() {
-      renderChoices();
-      showScreen(choiceScreen);
-    }
+        form.reset();
+        formSuccess.style.display = "block";
+        });
 
-    startBtn.addEventListener("click", () => {
-      openChoices();
-    });
+        const memories = [
+        {
+            icon: "✨",
+            short: "Quando você esquecer o quanto é linda",
+            title: "Abra quando esquecer o quão linda é",
+            message: `Eu queria que você pudesse se ver por um instante do jeito que eu te vejo.
 
-    readAllBtn.addEventListener("click", () => {
-      sequenceMode = true;
-      openCard(0);
-    });
+            Não é só sobre aparência, mesmo você sendo linda. É sobre o jeito que você existe no mundo, como fala, sorri, olha, admira, pensa e sente.
 
-    surpriseBtn.addEventListener("click", () => {
-      sequenceMode = false;
-      const randomIndex = Math.floor(Math.random() * memories.length);
-      openCard(randomIndex);
-    });
+            Você tem algo muito especial, e o mais bonito é que isso simplesmente acontece, sem esforço.`
+        },
+        {
+            icon: "🌙",
+            short: "Quando você sentir que não é o bastante",
+            title: "Abra quando o mundo fizer você duvidar de si",
+            message: `Você não precisa dar conta de tudo para ainda ser alguém incrível
 
-    nextBtn.addEventListener("click", () => {
-      if (currentIndex < memories.length - 1) {
-        currentIndex += 1;
+            Mesmo nos dias em que você duvida de si, ainda existe tanta coisa bonita em você. Seu jeito, sua presença, sua energia, sua história.
+
+            Você importa muito mais do que talvez perceba.`
+        },
+        {
+            icon: "☀️",
+            short: "Pra te arrancar um sorriso",
+            title: "Abra quando precisar sorrir",
+            message: `Tem algo no seu olhar que traz um brilho especial para o mundo. Não sei explicar direito, só sei que é especial.
+
+            E sim, eu sei que isso parece meio bobo...
+
+            Mas algumas das coisas mais verdadeiras que a gente sente acabam soando assim mesmo.`
+        },
+        {
+            icon: "👀",
+            short: "Quero te lembrar do que eu vejo em você",
+            title: "Abra quando quiser saber o que eu vejo em você",
+            message: `Vejo alguém linda — mas não de um jeito comum.
+
+            Vejo alguém com detalhes que ficam na cabeça. Um jeito único de falar, de reagir, de existir.
+
+            Vejo o jeito como você tenta se esconder quando fica tímida… e como, mesmo assim, ainda consegue ser a coisa mais bonita ali.
+
+            Vejo alguém que dá vontade de conhecer mais, cuidar mais e ter sempre por perto.`
+        },
+        {
+            icon: "🤍",
+            short: "Quando o dia estiver pesado",
+            title: "Abra quando estiver tendo um dia difícil",
+            message: `Ei… respira um pouquinho.
+
+            Você não precisa resolver tudo agora. Não precisa estar bem o tempo todo. Não precisa carregar o mundo nas costas.
+
+            Só queria que você lembrasse que você não está sozinha e que eu gosto muito de você — e me sinto especial por ter você aqui.`
+        },
+        {
+            icon: "⭐",
+            short: "Quando precisar de motivação",
+            title: "Abra quando estiver desmotivada",
+            message: `Se hoje estiver faltando motivação, tudo bem.
+
+            Você não precisa estar sempre animada pra continuar. Vai no seu tempo, do seu jeito.
+
+            Mas não esquece: cuidar de você também é uma forma de carinho — mesmo nos dias em que dá mais trabalho.
+            
+            E se em algum momento ficar difícil demais se motivar… não guarda só pra você. Pode vir até mim.`
+        },
+        {
+            icon: "♡",
+            short: "Quero um carinho",
+            title: "Abra quando quiser um carinho",
+            message: `Queria poder te dar um abraço daqueles bem apertados que fazem o mundo ficar quieto por alguns segundos.
+
+            Mas enquanto isso não é possível... deixa eu te lembrar de uma coisa:
+
+            Você é querida admirável e muito especial pra mim. Nunca deixe de ser você mesma`
+        },
+        {
+            icon: "🎁",
+            short: "Um pequeno presente",
+            title: "Abra agora",
+            message: `Eu poderia ter esperado uma data especial para fazer isso.
+
+            Mas achei mais bonito fazer do nada. Porque você não merece ser lembrada só em dias marcados.
+
+            Você merece ser lembrada numa terça qualquer, no meio da rotina, sem motivo nenhum — só porque você merece.`
+        }
+        ];
+
+        const openingPhrases = [
+        "Hoje também é um bom dia para lembrar que você é especial.",
+        "Esse cantinho continua aqui sempre que você precisar.",
+        "Nem todo carinho precisa esperar uma data.",
+        "Algumas pessoas merecem lembretes bonitos no meio da rotina.",
+        "Tem dias em que a gente só precisa de um pouco de carinho.",
+        "Você não precisa se esforçar para merecer cuidado.",
+        "Às vezes, ser lembrada com carinho já muda o dia.",
+        "Volta aqui sempre que o mundo parecer pesado demais.",
+        "Você merece delicadeza até nos dias comuns.",
+        "Algumas coisas bonitas precisam ser ditas mais de uma vez.",
+        "Não é exagero lembrar alguém do quanto ela importa.",
+        "Talvez hoje você só precise respirar e receber um lembrete bom.",
+        "Você é mais especial do que imagina nos dias em que duvida disso.",
+        "Esse site é pequeno, mas foi feito com intenção.",
+        "Que esse lembrete encontre você no momento certo.",
+        "Você não precisa estar bem o tempo todo para continuar sendo incrível.",
+        "Tem beleza no seu jeito de existir.",
+        "Um carinho inesperado também é uma forma de cuidado.",
+        "Quando esquecer, volta aqui. Eu deixei algumas verdades guardadas.",
+        "Esse não é um presente de data marcada. É só um carinho no meio do caminho."
+        ];
+
+        const startScreen = document.getElementById("startScreen");
+        const choiceScreen = document.getElementById("choiceScreen");
+        const cardScreen = document.getElementById("cardScreen");
+        const finalScreen = document.getElementById("finalScreen");
+
+        const startBtn = document.getElementById("startBtn");
+        const readAllBtn = document.getElementById("readAllBtn");
+        const surpriseBtn = document.getElementById("surpriseBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const prevBtn = document.getElementById("prevBtn");
+        const backOptionsBtn = document.getElementById("backOptionsBtn");
+        const restartBtn = document.getElementById("restartBtn");
+        const backToChoicesFinalBtn = document.getElementById("backToChoicesFinalBtn");
+
+        const choiceGrid = document.getElementById("choiceGrid");
+        const openingPhrase = document.getElementById("openingPhrase");
+        const memoryCard = document.getElementById("memoryCard");
+        const cardKicker = document.getElementById("cardKicker");
+        const cardTitle = document.getElementById("cardTitle");
+        const cardMessage = document.getElementById("cardMessage");
+        const counter = document.getElementById("counter");
+        const modeLabel = document.getElementById("modeLabel");
+        const progressFill = document.getElementById("progressFill");
+
+        let currentIndex = 0;
+        let sequenceMode = false;
+
+        function setOpeningPhrase() {
+        const randomIndex = Math.floor(Math.random() * openingPhrases.length);
+        openingPhrase.textContent = openingPhrases[randomIndex];
+        }
+
+        function showScreen(screen) {
+        [startScreen, choiceScreen, cardScreen, finalScreen, formScreen].forEach((item) => item.classList.remove("active"));
+        screen.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function renderChoices() {
+        choiceGrid.innerHTML = memories.map((memory, index) => `
+            <button class="choice-card" type="button" data-index="${index}">
+            <div class="choice-icon">${memory.icon}</div>
+            <span>lembrete ${String(index + 1).padStart(2, "0")}</span>
+            <strong>${memory.short}</strong>
+            </button>
+        `).join("");
+
+        choiceGrid.querySelectorAll(".choice-card").forEach((button) => {
+            button.addEventListener("click", () => {
+            sequenceMode = false;
+            openCard(Number(button.dataset.index));
+            });
+        });
+        }
+
+        function renderCard() {
+        const memory = memories[currentIndex];
+        const number = String(currentIndex + 1).padStart(2, "0");
+
+        cardKicker.textContent = `${memory.icon} lembrete ${number}`;
+        cardTitle.textContent = memory.title;
+        cardMessage.textContent = memory.message;
+        counter.textContent = `${currentIndex + 1} de ${memories.length}`;
+        modeLabel.textContent = sequenceMode ? "lendo em sequência" : "lembrete escolhido";
+        progressFill.style.width = `${((currentIndex + 1) / memories.length) * 100}%`;
+
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.textContent = currentIndex === memories.length - 1
+            ? (sequenceMode ? "abrir último lembrete" : "voltar às opções")
+            : "próximo lembrete";
+
+        memoryCard.style.animation = "none";
+        memoryCard.offsetHeight;
+        memoryCard.style.animation = "cardIn 560ms ease both";
+        }
+
+        function openCard(index) {
+        currentIndex = index;
         renderCard();
-        return;
-      }
+        showScreen(cardScreen);
+        }
 
-      if (sequenceMode) {
-        showScreen(finalScreen);
-      } else {
+        function openChoices() {x
+        renderChoices();
+        showScreen(choiceScreen);
+        }
+
+        startBtn.addEventListener("click", () => {
         openChoices();
-      }
-    });
+        });
 
-    prevBtn.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        currentIndex -= 1;
-        renderCard();
-      }
-    });
+        readAllBtn.addEventListener("click", () => {
+        sequenceMode = true;
+        openCard(0);
+        });
 
-    backOptionsBtn.addEventListener("click", () => {
-      sequenceMode = false;
-      openChoices();
-    });
+        surpriseBtn.addEventListener("click", () => {
+        sequenceMode = false;
+        const randomIndex = Math.floor(Math.random() * memories.length);
+        openCard(randomIndex);
+        });
 
-    restartBtn.addEventListener("click", () => {
-      sequenceMode = true;
-      openCard(0);
-    });
+        nextBtn.addEventListener("click", () => {
+        if (currentIndex < memories.length - 1) {
+            currentIndex += 1;
+            renderCard();
+            return;
+        }
 
-    backToChoicesFinalBtn.addEventListener("click", () => {
-      sequenceMode = false;
-      openChoices();
-    });
+        if (sequenceMode) {
+            showScreen(finalScreen);
+        } else {
+            openChoices();
+        }
+        });
 
-    setOpeningPhrase();
-    renderChoices();
+        prevBtn.addEventListener("click", () => {
+        if (currentIndex > 0) {
+            currentIndex -= 1;
+            renderCard();
+        }
+        });
 
-    const photos = document.querySelectorAll(".photo-carousel img");
-    let photoIndex = 0;
+        backOptionsBtn.addEventListener("click", () => {
+        sequenceMode = false;
+        openChoices();
+        });
 
-    function showNextPhoto() {
-      if (!photos.length) return;
+        restartBtn.addEventListener("click", () => {
+        sequenceMode = true;
+        openCard(0);
+        });
 
-      photos.forEach(p => p.classList.remove("active"));
-      photos[photoIndex].classList.add("active");
+        backToChoicesFinalBtn.addEventListener("click", () => {
+        sequenceMode = false;
+        openChoices();
+        });
 
-      photoIndex = (photoIndex + 1) % photos.length;
-    }
+        setOpeningPhrase();
+        renderChoices();
 
-    setInterval(showNextPhoto, 5000);
-    showNextPhoto();
+        const photos = document.querySelectorAll(".photo-carousel img");
+        let photoIndex = 0;
+
+        function showNextPhoto() {
+        if (!photos.length) return;
+
+        photos.forEach(p => p.classList.remove("active"));
+        photos[photoIndex].classList.add("active");
+
+        photoIndex = (photoIndex + 1) % photos.length;
+        }
+
+        setInterval(showNextPhoto, 5000);
+        showNextPhoto();
+
+        const secretBtn = document.getElementById("secretBtn");
+
+        secretBtn.addEventListener("click", () => {
+        const password = prompt("Digite a senha:");
+
+        if (password === "29032026") {
+            openSecret();
+        } else if (password !== null) {
+            alert("Senha incorreta.");
+        }
+        });
 
   </script>
 </body>
