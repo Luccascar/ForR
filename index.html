@@ -734,20 +734,26 @@
     </form>
     </div>
 
-    <section id="secretScreen" class="screen">
+        <section id="secretScreen" class="screen">
+
         <div class="panel" style="text-align:center;">
-            <img src="images/Foto5.png" alt="Segredo" style="max-width:100%; border-radius:20px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);" />
+
+            <p style="margin-bottom:20px; color: var(--muted);">
+            não era pra ser nada grande…<br>
+            só algo que eu quis guardar pra você
+            </p>
+
+            <img src="images/Foto5.png" 
+                alt="Segredo" 
+                style="max-width:100%; border-radius:20px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);" />
 
             <div class="actions" style="margin-top: 24px;">
-                <button class="btn btn-secondary" id="backFromSecret">voltar</button>
+            <button class="btn btn-secondary" id="backFromSecret">voltar</button>
             </div>
+
         </div>
-    </section>
-    
-            <p style="margin-bottom:20px; color: var(--muted);">
-        não era pra ser nada grande…<br>
-        só algo que eu quis guardar pra você
-        </p>
+
+        </section>
 
   </main>
 
@@ -944,7 +950,7 @@
         }
 
         function showScreen(screen) {
-        [startScreen, choiceScreen, cardScreen, finalScreen, formScreen].forEach((item) => item.classList.remove("active"));
+        [startScreen, choiceScreen, cardScreen, finalScreen, formScreen, secretScreen].forEach((item) => item.classList.remove("active"));
         screen.classList.add("active");
         window.scrollTo({ top: 0, behavior: "smooth" });
         }
