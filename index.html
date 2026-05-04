@@ -686,53 +686,55 @@
     </section>
 
     <section id="formScreen" class="screen">
-  <div class="panel">
-    <h2 class="choice-title">
-      <span class="gradient-text">Um espacinho só seu</span>
-    </h2>
+        <div class="panel">
+            <h2 class="choice-title">
+            <span class="gradient-text">Um espacinho só seu</span>
+            </h2>
 
-    <p class="choice-subtitle">
-      Se quiser, pode me deixar um pedacinho do seu dia aqui.<br><br>
-      Pode ser algo bom, algo difícil ou só qualquer pensamento.
-      <br><br>
-      Eu vou ler com carinho 🤍
-    </p>
+            <p class="choice-subtitle">
+            Se quiser, pode me deixar um pedacinho do seu dia aqui.<br><br>
+            Pode ser algo bom, algo difícil ou só qualquer pensamento.
+            <br><br>
+            Eu vou ler com carinho 🤍
+            </p>
 
-    <form id="messageForm" action="https://formspree.io/f/xlgzjeda" method="POST">
+            <form id="messageForm" action="https://formspree.io/f/xlgzjeda" method="POST">
 
-      <select name="tipo" required style="width:100%; margin-top:20px; padding:12px; border-radius:14px;">
-        <option value="">Escolhe o que quer dizer</option>
-        <option>💭 Quero desabafar</option>
-        <option>🤍 Algo que estou sentindo</option>
-        <option>✨ Um desejo</option>
-        <option>😔 Uma insegurança</option>
-        <option>😊 Algo bom que aconteceu</option>
-      </select>
+            <select name="tipo" required style="width:100%; margin-top:20px; padding:12px; border-radius:14px;">
+                <option value="">Escolhe o que quer dizer</option>
+                <option>💭 Quero desabafar</option>
+                <option>🤍 Algo que estou sentindo</option>
+                <option>✨ Um desejo</option>
+                <option>😔 Uma insegurança</option>
+                <option>😊 Algo bom que aconteceu</option>
+            </select>
 
-      <textarea 
-        name="mensagem" 
-        rows="6" 
-        placeholder="Pode escrever sem filtro…"
-        required
-        style="width:100%; margin-top:14px; padding:14px; border-radius:18px;">
-      </textarea>
+            <textarea 
+                name="mensagem" 
+                rows="6" 
+                placeholder="Pode escrever sem filtro…"
+                required
+                style="width:100%; margin-top:14px; padding:14px; border-radius:18px;">
+            </textarea>
 
-      <div class="actions">
-        <button type="submit" class="btn btn-primary">
-          enviar 💌
-        </button>
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">
+                enviar 💌
+                </button>
 
-        <button type="button" class="btn btn-secondary" id="backFromForm">
-          voltar
-        </button>
-      </div>
+                <button type="button" class="btn btn-secondary" id="backFromForm">
+                voltar
+                </button>
+            </div>
 
-      <p id="formSuccess" style="display:none; margin-top:18px;">
-        Recebi. Vou ler com carinho 🤍
-      </p>
+            <p id="formSuccess" style="display:none; margin-top:18px;">
+                Recebi. Vou ler com carinho 🤍
+            </p>
 
-    </form>
-    </div>
+            </form>
+        </div>
+
+    </section>
 
         <section id="secretScreen" class="screen">
 
@@ -743,7 +745,7 @@
             só algo que eu quis guardar pra você
             </p>
 
-            <img src="images/foto5.jpg" 
+            <img src="images/foto5.jpg"
                 alt="Segredo" 
                 style="max-width:100%; border-radius:20px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);" />
 
@@ -999,7 +1001,7 @@
         showScreen(cardScreen);
         }
 
-        function openChoices() {x
+        function openChoices() {
         renderChoices();
         showScreen(choiceScreen);
         }
