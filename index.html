@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pra quando você esquecer</title>
 
+  <!-- Favicon emoji -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♡</text></svg>" />
+
+  <!-- Open Graph — preview no WhatsApp, Instagram, etc. -->
+  <meta property="og:title" content="Pra quando você esquecer ♡" />
+  <meta property="og:description" content="Um cantinho feito só pra você. Abra quando precisar de um lembrete bom." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#1a102d" />
+
+  <!-- ✅ Cloudflare Web Analytics — substitua o TOKEN abaixo pelo seu token real -->
+  <!-- Para obter o token: dash.cloudflare.com → Web Analytics → Add a site -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "eb02813ae3254574a848c7bd619e8907"}'></script>
+
   <style>
     :root {
       --bg-1: #12091f;
@@ -589,7 +602,244 @@
     transform: scale(1.08);
     background: rgba(255,255,255,0.15);
     }
-   
+
+    /* ── Modal de senha ── */
+    .password-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 1, 12, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 300ms ease;
+    }
+
+    .password-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .password-modal {
+      width: min(100%, 400px);
+      padding: clamp(28px, 6vw, 44px);
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.06));
+      box-shadow: 0 40px 100px rgba(4,1,12,0.6);
+      text-align: center;
+      transform: translateY(20px) scale(0.96);
+      transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .password-modal-overlay.open .password-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .password-modal .modal-icon {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .password-modal h3 {
+      font-size: clamp(1.3rem, 4vw, 1.7rem);
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .password-modal p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+    }
+
+    .password-modal input[type="password"] {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      font: inherit;
+      font-size: 1.1rem;
+      letter-spacing: 0.25em;
+      text-align: center;
+      outline: none;
+      transition: border-color 200ms ease, background 200ms ease;
+      margin-bottom: 16px;
+    }
+
+    .password-modal input[type="password"]::placeholder {
+      letter-spacing: 0.05em;
+      color: rgba(248,247,255,0.35);
+    }
+
+    .password-modal input[type="password"]:focus {
+      border-color: rgba(196,181,253,0.5);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .password-modal input[type="password"].shake {
+      animation: inputShake 400ms ease;
+      border-color: rgba(240,100,100,0.6);
+    }
+
+    @keyframes inputShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    .password-modal .modal-error {
+      color: rgba(240, 130, 130, 0.9);
+      font-size: 0.88rem;
+      margin-bottom: 14px;
+      min-height: 20px;
+      transition: opacity 200ms ease;
+    }
+
+    .password-modal .modal-btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .password-modal .modal-btns button {
+      flex: 1;
+    }
+
+    /* ── Form success aprimorado ── */
+    .form-success-state {
+      display: none;
+      text-align: center;
+      padding: 24px 0 8px;
+      animation: fadeUp 500ms ease both;
+    }
+
+    .form-success-state .success-icon {
+      font-size: 2.8rem;
+      display: block;
+      margin-bottom: 14px;
+      animation: successPop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes successPop {
+      from { transform: scale(0.4); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .form-success-state h3 {
+      font-size: 1.5rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .form-success-state p {
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    /* ── Badge "lido" nos cards de escolha ── */
+    .choice-card {
+      position: relative;
+    }
+
+    .choice-card.read::after {
+      content: "✓";
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(196, 181, 253, 0.22);
+      border: 1px solid rgba(196, 181, 253, 0.4);
+      color: var(--purple-soft);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+
+    .choice-card.read {
+      border-color: rgba(196, 181, 253, 0.28);
+    }
+
+    /* ── Seletor de humor com emojis ── */
+    .mood-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+
+    .mood-btn {
+      min-height: 0;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 200ms ease;
+      font-weight: 500;
+    }
+
+    .mood-btn:hover {
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(255,255,255,0.26);
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    .mood-btn.selected {
+      background: rgba(196, 181, 253, 0.18);
+      border-color: rgba(196, 181, 253, 0.5);
+      color: var(--purple-soft);
+      box-shadow: 0 0 0 3px rgba(196, 181, 253, 0.1);
+    }
+
+    /* ── Banner de visita especial / data especial ── */
+    .special-banner {
+      display: none;
+      margin-top: 20px;
+      padding: 14px 20px;
+      border-radius: 18px;
+      background: rgba(240, 171, 252, 0.10);
+      border: 1px solid rgba(240, 171, 252, 0.25);
+      color: var(--pink-soft);
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      line-height: 1.55;
+      text-align: center;
+      animation: fadeUp 600ms ease both;
+    }
+
+    .special-banner.show {
+      display: block;
+    }
+
+    /* ── FadeOut na troca de telas ── */
+    .screen.leaving {
+      animation: fadeOut 220ms ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0) scale(1); }
+      to   { opacity: 0; transform: translateY(-10px) scale(0.988); }
+    }
+
   </style>
 </head>
 
@@ -607,6 +857,9 @@
         <br></br>
 
         <p class="opening-phrase" id="openingPhrase"></p>
+
+        <!-- Banner especial — aparece em datas ou visitas especiais -->
+        <div class="special-banner" id="specialBanner"></div>
 
         <div class="actions">
           <button class="btn btn-primary" id="startBtn">começar</button>
@@ -700,21 +953,23 @@
 
             <form id="messageForm" action="https://formspree.io/f/xlgzjeda" method="POST">
 
-            <select name="tipo" required style="width:100%; margin-top:20px; padding:12px; border-radius:14px;">
-                <option value="">Escolhe o que quer dizer</option>
-                <option>💭 Quero desabafar</option>
-                <option>🤍 Algo que estou sentindo</option>
-                <option>✨ Um desejo</option>
-                <option>😔 Uma insegurança</option>
-                <option>😊 Algo bom que aconteceu</option>
-            </select>
+            <!-- Campo oculto que recebe o valor do humor selecionado -->
+            <input type="hidden" name="tipo" id="moodValue" />
+
+            <div class="mood-selector" id="moodSelector">
+              <button type="button" class="mood-btn" data-value="💭 Quero desabafar">💭 Quero desabafar</button>
+              <button type="button" class="mood-btn" data-value="🤍 Algo que estou sentindo">🤍 Algo que estou sentindo</button>
+              <button type="button" class="mood-btn" data-value="✨ Um desejo">✨ Um desejo</button>
+              <button type="button" class="mood-btn" data-value="😔 Uma insegurança">😔 Uma insegurança</button>
+              <button type="button" class="mood-btn" data-value="😊 Algo bom que aconteceu">😊 Algo bom que aconteceu</button>
+            </div>
 
             <textarea 
                 name="mensagem" 
                 rows="6" 
                 placeholder="Pode escrever sem filtro…"
                 required
-                style="width:100%; margin-top:14px; padding:14px; border-radius:18px;">
+                style="width:100%; margin-top:14px; padding:14px; border-radius:18px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); color:var(--text); font:inherit; font-size:1rem; line-height:1.6; resize:vertical; outline:none; transition: border-color 200ms ease;">
             </textarea>
 
             <div class="actions">
@@ -732,6 +987,17 @@
             </p>
 
             </form>
+
+            <!-- Estado de sucesso aprimorado -->
+            <div class="form-success-state" id="formSuccessState">
+              <span class="success-icon">💌</span>
+              <h3><span class="gradient-text">Recebi com carinho</span></h3>
+              <p>Sua mensagem chegou até mim.<br>Vou ler com calma e atenção. 🤍</p>
+              <div class="actions" style="justify-content:center;">
+                <button class="btn btn-primary" id="backFromFormSuccess">voltar ao início</button>
+              </div>
+            </div>
+
         </div>
 
     </section>
@@ -759,6 +1025,21 @@
 
   </main>
 
+  <!-- ── Modal de senha elegante ── -->
+  <div class="password-modal-overlay" id="passwordModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="password-modal">
+      <span class="modal-icon">🔒</span>
+      <h3 id="modalTitle"><span class="gradient-text">Área secreta</span></h3>
+      <p>Só pra quem sabe o caminho</p>
+      <input type="password" id="passwordInput" placeholder="••••••••" maxlength="20" autocomplete="off" />
+      <p class="modal-error" id="modalError"></p>
+      <div class="modal-btns">
+        <button class="btn btn-secondary" id="modalCancelBtn">cancelar</button>
+        <button class="btn btn-primary" id="modalConfirmBtn">entrar</button>
+      </div>
+    </div>
+  </div>
+
     <button id="floatingFormBtn">💌</button>
     <button id="secretBtn" title="Área secreta">🔒</button>
 
@@ -769,46 +1050,130 @@
         const backFromForm = document.getElementById("backFromForm");
         const form = document.getElementById("messageForm");
         const formSuccess = document.getElementById("formSuccess");
+        const formSuccessState = document.getElementById("formSuccessState");
+        const backFromFormSuccess = document.getElementById("backFromFormSuccess");
 
         const secretScreen = document.getElementById("secretScreen");
         const backFromSecret = document.getElementById("backFromSecret");
 
+        // ── Modal de senha ──
+        const passwordModalOverlay = document.getElementById("passwordModalOverlay");
+        const passwordInput = document.getElementById("passwordInput");
+        const modalError = document.getElementById("modalError");
+        const modalConfirmBtn = document.getElementById("modalConfirmBtn");
+        const modalCancelBtn = document.getElementById("modalCancelBtn");
+
+        // Hash SHA-256 da senha "29032026" — a senha real nunca fica exposta no código
+        const SENHA_HASH = "4c362809b6d47734aed70ca921793b4b1a0ab197e83fc7906ea5455357c44989";
+
+        async function hashString(str) {
+          const encoder = new TextEncoder();
+          const data = encoder.encode(str);
+          const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+          const hashArray = Array.from(new Uint8Array(hashBuffer));
+          return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+        }
+
+        function openPasswordModal() {
+          passwordInput.value = "";
+          modalError.textContent = "";
+          passwordInput.classList.remove("shake");
+          passwordModalOverlay.classList.add("open");
+          setTimeout(() => passwordInput.focus(), 350);
+        }
+
+        function closePasswordModal() {
+          passwordModalOverlay.classList.remove("open");
+        }
+
+        async function tryPassword() {
+          const typed = passwordInput.value.trim();
+          if (!typed) return;
+
+          const hashed = await hashString(typed);
+
+          if (hashed === SENHA_HASH) {
+            closePasswordModal();
+            openSecret();
+          } else {
+            modalError.textContent = "Senha incorreta. Tenta de novo 🔐";
+            passwordInput.classList.remove("shake");
+            passwordInput.offsetHeight; // force reflow
+            passwordInput.classList.add("shake");
+            passwordInput.value = "";
+            setTimeout(() => passwordInput.focus(), 50);
+          }
+        }
+
+        modalConfirmBtn.addEventListener("click", tryPassword);
+
+        passwordInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") tryPassword();
+          if (e.key === "Escape") closePasswordModal();
+        });
+
+        modalCancelBtn.addEventListener("click", closePasswordModal);
+
+        passwordModalOverlay.addEventListener("click", (e) => {
+          if (e.target === passwordModalOverlay) closePasswordModal();
+        });
+
+        // ── Área secreta ──
         function openSecret() {
-        showScreen(secretScreen);
+          showScreen(secretScreen);
         }
 
         backFromSecret.addEventListener("click", () => {
-        openChoices(); // volta pras opções
+          openChoices();
         });
 
-        // abrir form
+        // ── Botão flutuante do formulário ──
         floatingFormBtn.addEventListener("click", () => {
-        showScreen(formScreen);
+          showScreen(formScreen);
         });
 
-        // voltar
         backFromForm.addEventListener("click", () => {
-        showScreen(startScreen);
+          showScreen(startScreen);
         });
 
-        // envio sem sair da página
+        // Voltar do estado de sucesso
+        backFromFormSuccess.addEventListener("click", () => {
+          showScreen(startScreen);
+          // Reset para próximo uso
+          form.style.display = "block";
+          formSuccessState.style.display = "none";
+        });
+
+        // ── Envio do formulário com feedback melhorado ──
         form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+          e.preventDefault();
 
-        const data = new FormData(form);
+          const submitBtn = form.querySelector('[type="submit"]');
+          submitBtn.disabled = true;
+          submitBtn.textContent = "enviando… 💌";
 
-        await fetch(form.action, {
-            method: "POST",
-            body: data,
-            headers: {
-            'Accept': 'application/json'
-            }
+          try {
+            const data = new FormData(form);
+
+            await fetch(form.action, {
+              method: "POST",
+              body: data,
+              headers: { "Accept": "application/json" }
+            });
+
+            form.reset();
+            // Esconde o form e mostra o estado de sucesso
+            form.style.display = "none";
+            formSuccessState.style.display = "block";
+
+          } catch (err) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "enviar 💌";
+            alert("Ops, algo deu errado. Tenta de novo?");
+          }
         });
 
-        form.reset();
-        formSuccess.style.display = "block";
-        });
-
+        // ── Dados e lembretes ──
         const memories = [
         {
             icon: "✨",
@@ -952,27 +1317,55 @@
         openingPhrase.textContent = openingPhrases[randomIndex];
         }
 
+        // ── FadeOut ao trocar de tela ──
         function showScreen(screen) {
-        [startScreen, choiceScreen, cardScreen, finalScreen, formScreen, secretScreen].forEach((item) => item.classList.remove("active"));
-        screen.classList.add("active");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+          const current = [startScreen, choiceScreen, cardScreen, finalScreen, formScreen, secretScreen]
+            .find(s => s.classList.contains("active"));
+
+          if (current && current !== screen) {
+            current.classList.add("leaving");
+            setTimeout(() => {
+              current.classList.remove("active", "leaving");
+              screen.classList.add("active");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }, 210);
+          } else {
+            [startScreen, choiceScreen, cardScreen, finalScreen, formScreen, secretScreen]
+              .forEach(s => s.classList.remove("active", "leaving"));
+            screen.classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }
+
+        // ── Memória de lembretes lidos (localStorage) ──
+        function getReadSet() {
+          try {
+            return new Set(JSON.parse(localStorage.getItem("readCards") || "[]"));
+          } catch { return new Set(); }
+        }
+
+        function markAsRead(index) {
+          const read = getReadSet();
+          read.add(index);
+          try { localStorage.setItem("readCards", JSON.stringify([...read])); } catch {}
         }
 
         function renderChoices() {
-        choiceGrid.innerHTML = memories.map((memory, index) => `
-            <button class="choice-card" type="button" data-index="${index}">
-            <div class="choice-icon">${memory.icon}</div>
-            <span>lembrete ${String(index + 1).padStart(2, "0")}</span>
-            <strong>${memory.short}</strong>
+          const readSet = getReadSet();
+          choiceGrid.innerHTML = memories.map((memory, index) => `
+            <button class="choice-card${readSet.has(index) ? " read" : ""}" type="button" data-index="${index}">
+              <div class="choice-icon">${memory.icon}</div>
+              <span>lembrete ${String(index + 1).padStart(2, "0")}</span>
+              <strong>${memory.short}</strong>
             </button>
-        `).join("");
+          `).join("");
 
-        choiceGrid.querySelectorAll(".choice-card").forEach((button) => {
+          choiceGrid.querySelectorAll(".choice-card").forEach((button) => {
             button.addEventListener("click", () => {
-            sequenceMode = false;
-            openCard(Number(button.dataset.index));
+              sequenceMode = false;
+              openCard(Number(button.dataset.index));
             });
-        });
+          });
         }
 
         function renderCard() {
@@ -997,9 +1390,14 @@
         }
 
         function openCard(index) {
-        currentIndex = index;
-        renderCard();
-        showScreen(cardScreen);
+          currentIndex = index;
+          markAsRead(index);
+          renderCard();
+          showScreen(cardScreen);
+          // Scroll suave até o card em mobile
+          setTimeout(() => {
+            memoryCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }, 260);
         }
 
         function openChoices() {
@@ -1061,6 +1459,47 @@
         setOpeningPhrase();
         renderChoices();
 
+        // ── Contador de visitas + mensagem especial ──
+        const specialBanner = document.getElementById("specialBanner");
+
+        function checkVisitAndDates() {
+          // Contador de visitas
+          let visits = 0;
+          try { visits = parseInt(localStorage.getItem("visitCount") || "0") + 1; } catch {}
+          try { localStorage.setItem("visitCount", visits); } catch {}
+
+          const now = new Date();
+          const month = now.getMonth() + 1; // 1–12
+          const day = now.getDate();
+
+          // ── Datas especiais — edite aqui à vontade ──
+          const specialDates = [
+            { month: 11,  day: 8, msg: "✨ Feliz aniversário! Que esse dia seja tão bonito quanto você merece. 🎂" },
+            // Adicione mais datas aqui:
+            { month: 3, day: 29, msg: "💜 Faz exatos 1 ano que tive o prazer de sentir sua boca na minha. Espero qu8e venha mais anos por ai...." },
+          ];
+
+          const todaySpecial = specialDates.find(d => d.month === month && d.day === day);
+
+          // ── Mensagens por número de visitas ──
+          const visitMessages = {
+            10: "Dez vezes aqui. Esse lugar existe por você. 💜",
+            20: "Vinte visitas. Você merece um abraço imenso e muitos beijos. 🫂",
+            50: "Cinquenta vezes. Obrigado por sempre voltar. ♡",
+          };
+
+          if (todaySpecial) {
+            specialBanner.textContent = todaySpecial.msg;
+            specialBanner.classList.add("show");
+          } else if (visitMessages[visits]) {
+            specialBanner.textContent = visitMessages[visits];
+            specialBanner.classList.add("show");
+          }
+        }
+
+        checkVisitAndDates();
+
+        // ── Carrossel de fotos ──
         const photos = document.querySelectorAll(".photo-carousel img");
         let photoIndex = 0;
 
@@ -1076,18 +1515,25 @@
         setInterval(showNextPhoto, 5000);
         showNextPhoto();
 
+        // ── Seletor de humor com emojis ──
+        const moodSelector = document.getElementById("moodSelector");
+        const moodValue = document.getElementById("moodValue");
+
+        moodSelector.querySelectorAll(".mood-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            moodSelector.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            moodValue.value = btn.dataset.value;
+          });
+        });
+
+        // ── Botão secreto abre o modal elegante ──
         const secretBtn = document.getElementById("secretBtn");
-
         secretBtn.addEventListener("click", () => {
-        const password = prompt("Digite a senha:");
-
-        if (password === "29032026") {
-            openSecret();
-        } else if (password !== null) {
-            alert("Senha incorreta.");
-        }
+          openPasswordModal();
         });
 
   </script>
+
 </body>
 </html>
