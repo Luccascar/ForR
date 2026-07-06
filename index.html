@@ -14,8 +14,7 @@
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#1a102d" />
 
-  <!-- ✅ Cloudflare Web Analytics — substitua o TOKEN abaixo pelo seu token real -->
-  <!-- Para obter o token: dash.cloudflare.com → Web Analytics → Add a site -->
+  <!-- ✅ Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "eb02813ae3254574a848c7bd619e8907"}'></script>
 
   <style>
@@ -520,94 +519,859 @@
     }
 
     .photo-carousel {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    overflow: hidden;
-    border-radius: inherit;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      border-radius: inherit;
     }
 
     .photo-carousel img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 🔥 garante que ocupa tudo */
-    opacity: 0;
-    filter: blur(5px) brightness(0.70) saturate(1.1);
-    transition: opacity 2.5s ease; /* transição mais suave */
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: blur(5px) brightness(0.70) saturate(1.1);
+      transition: opacity 2.5s ease;
     }
 
     .photo-carousel img.active {
-    opacity: 0.4;
+      opacity: 0.4;
     }
 
     .photo-carousel {
-    pointer-events: none;
+      pointer-events: none;
     }
 
     #floatingFormBtn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    font-size: 1.4rem;
-
-    background: linear-gradient(135deg, #7c3aed, #a855f7);
-    color: white;
-
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
-    z-index: 999;
-    transition: transform 0.2s ease;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: white;
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+      z-index: 999;
+      transition: transform 0.2s ease;
+      animation: pulse 2s infinite;
     }
 
     #floatingFormBtn:hover {
-    transform: scale(1.08);
-    }
-
-    #floatingFormBtn {
-    animation: pulse 2s infinite;
+      transform: scale(1.08);
     }
 
     @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.6); }
-    70% { box-shadow: 0 0 0 10px rgba(124,58,237,0); }
-    100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+      0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(124,58,237,0); }
+      100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+    }
+
+    #floatingResponsesBtn {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, var(--purple-soft), var(--pink-soft));
+      color: white;
+      box-shadow: 0 10px 30px rgba(196, 181, 253, 0.4);
+      z-index: 998;
+      transition: transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #floatingResponsesBtn:hover {
+      transform: scale(1.08);
+    }
+
+    .badge-new {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #ff006e;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: badgePulse 2s infinite;
+    }
+
+    @keyframes badgePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
     }
 
     #secretBtn {
-    position: fixed;
-    bottom: 18px;
-    left: 20px; /* muda o canto aqui */
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.2s ease;
+      position: fixed;
+      bottom: 18px;
+      left: 20px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s ease;
     }
 
     #secretBtn:hover {
-    transform: scale(1.08);
-    background: rgba(255,255,255,0.15);
+      transform: scale(1.08);
+      background: rgba(255,255,255,0.15);
     }
 
-    /* ── Modal de senha ── */
+    /* ── STYLES PARA RESPOSTAS ── */
+    .responses-panel .choice-title,
+    .responses-panel .choice-subtitle {
+      text-align: left;
+      margin-left: 0;
+      max-width: 760px;
+    }
+
+    .responses-intro {
+      margin-bottom: 26px;
+    }
+
+    .responses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .response-card-item {
+      position: relative;
+      width: 100%;
+      min-height: 178px;
+      text-align: left;
+      padding: 22px 22px 18px;
+      border-radius: 26px 14px 26px 14px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.06)),
+        radial-gradient(circle at top right, rgba(240,171,252,0.18), transparent 42%);
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 20px 50px rgba(10, 3, 24, 0.24);
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .response-card-item::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 6px;
+      background: linear-gradient(180deg, var(--purple-soft), var(--pink-soft));
+      opacity: 0.95;
+    }
+
+    .response-card-item::after {
+      content: "";
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0 22%, rgba(255,255,255,0.22) 23% 100%);
+      opacity: 0.82;
+    }
+
+    .response-card-item:hover {
+      transform: translateY(-4px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08)),
+        radial-gradient(circle at top right, rgba(240,171,252,0.24), transparent 42%);
+      border-color: rgba(255,255,255,0.26);
+      box-shadow: 0 26px 58px rgba(10, 3, 24, 0.32);
+    }
+
+    .response-card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--purple-soft);
+      font-size: 0.8rem;
+      line-height: 1;
+      max-width: 100%;
+      width: fit-content;
+    }
+
+    .response-card-item strong {
+      display: block;
+      font-size: clamp(1.04rem, 2vw, 1.22rem);
+      line-height: 1.24;
+      margin-bottom: 12px;
+    }
+
+    .response-preview {
+      color: rgba(248, 247, 255, 0.76);
+      font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+      line-height: 1.62;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 18px;
+      min-height: calc(1.62em * 3);
+    }
+
+    .response-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: auto;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .response-card-meta strong {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--purple-soft);
+      white-space: nowrap;
+    }
+
+    .no-responses {
+      text-align: center;
+      padding: 42px 20px;
+      color: var(--muted);
+    }
+
+    .no-responses-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .response-wrap {
+      width: min(100%, 860px);
+      margin: 0 auto;
+    }
+
+    .response-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .response-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--purple-soft);
+      font-size: 0.86rem;
+      letter-spacing: 0.03em;
+    }
+
+    .response-date {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .response-card {
+      position: relative;
+      padding: clamp(24px, 5vw, 42px);
+      border: 1px solid var(--card-border);
+      border-radius: clamp(28px, 5vw, 44px);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.055)),
+        radial-gradient(circle at 14% 18%, rgba(196,181,253,0.12), transparent 28%),
+        radial-gradient(circle at 86% 14%, rgba(240,171,252,0.12), transparent 28%);
+      box-shadow: 0 30px 90px var(--shadow);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
+      animation: cardIn 560ms ease both;
+    }
+
+    .response-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -120px -140px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .response-card-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .response-kicker {
+      color: var(--pink-soft);
+      font-weight: 700;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
+    }
+
+    .response-title {
+      font-size: clamp(1.85rem, 5.5vw, 3.15rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      color: var(--text);
+      max-width: 16ch;
+    }
+
+    .response-tabs {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      gap: 8px;
+      padding: 6px;
+      margin: 22px 0 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .response-tab {
+      border: 0;
+      background: transparent;
+      color: rgba(248, 247, 255, 0.76);
+      padding: 11px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .response-tab.active {
+      color: var(--text);
+      background: linear-gradient(135deg, var(--purple), var(--purple-2) 55%, #d946ef);
+      box-shadow: 0 12px 28px rgba(124, 58, 237, 0.28);
+    }
+
+    .response-tab:not(.active):hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .response-reader {
+      position: relative;
+      z-index: 1;
+      display: none;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      max-height: min(42vh, 360px);
+      overflow: auto;
+    }
+
+    .response-reader.active {
+      display: block;
+    }
+
+    .response-reader-context {
+      border-left: 4px solid var(--purple-soft);
+    }
+
+    .response-reader-reply {
+      border-left: 4px solid var(--pink-soft);
+    }
+
+    .response-label {
+      color: var(--purple-soft);
+      font-weight: 700;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .response-user-message {
+      color: rgba(248, 247, 255, 0.86);
+      font-size: clamp(0.98rem, 2vw, 1.08rem);
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+
+    .response-message {
+      color: rgba(248, 247, 255, 0.88);
+      font-size: clamp(0.98rem, 2vw, 1.08rem);
+      line-height: 1.8;
+      white-space: pre-line;
+      transition: all 400ms ease;
+      position: relative;
+    }
+
+    .response-message.locked {
+      filter: blur(12px);
+      user-select: none;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    .response-message.locked::before {
+      content: "🔒 Bloqueado";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--pink-soft);
+      background: rgba(4, 1, 12, 0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    .response-footer {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .response-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 30px;
+      justify-content: flex-start;
+    }
+
+    /* ── OVERLAY DE DECISÃO ── */
+    .response-choice-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(4, 1, 12, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 10;
+      animation: fadeUp 300ms ease both;
+    }
+
+    .response-choice-content {
+      text-align: center;
+    }
+
+    .response-choice-text {
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+
+    .response-choice-btns {
+      display: flex;
+      gap: 12px;
+      flex-direction: column;
+    }
+
+    .btn-yes-response {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--purple), var(--purple-2));
+      border: none;
+      border-radius: 18px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+    .btn-yes-response:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+    }
+
+    .btn-no-response {
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 18px;
+      color: rgba(248, 247, 255, 0.76);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+    .btn-no-response:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+    }
+
+    .response-guarded-msg {
+      color: var(--pink-soft);
+      font-size: 1rem;
+    }
+
+    @media (max-width: 720px) {
+      .responses-panel .choice-title,
+      .responses-panel .choice-subtitle {
+        text-align: center;
+      }
+
+      .responses-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .response-topline {
+        align-items: flex-start;
+      }
+
+      .response-card-head {
+        flex-direction: column;
+      }
+
+      .response-tabs {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .response-tab {
+        flex: 1;
+      }
+
+      .response-reader {
+        max-height: min(46vh, 380px);
+      }
+
+      .response-actions {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .response-actions .back-options {
+        width: 100%;
+      }
+
+      .response-actions .btn-primary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <section id="startScreen" class="screen active">
+      <div class="hero">
+        <div class="eyebrow">♡ um lembrete só seu</div>
+        <h1><span class="gradient-text">Um cantinho para Você</span></h1>
+        <p>
+          Oii, Ray.<br><br>
+          Esse site não é por nenhuma data especial. Não é aniversário, não é comemoração, não é desculpa para nada e nem por nada.<br><br>
+          É só porque às vezes eu acho que você merece ser lembrada do quanto é especial e importante.
+        </p>
+        <br></br>
+
+        <p class="opening-phrase" id="openingPhrase"></p>
+
+        <div class="special-banner" id="specialBanner"></div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="startBtn">começar</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="choiceScreen" class="screen">
+      <div class="panel">
+        <h2 class="choice-title"><span class="gradient-text">O que seu coração precisa hoje?</span></h2>
+        <p class="choice-subtitle">
+          Escolhe um lembrete que combine com o seu agora. Ou, se quiser, lê tudo em sequência.
+        </p>
+
+        <div class="choice-grid" id="choiceGrid"></div>
+
+        <div class="choice-footer">
+          <button class="btn btn-primary" id="readAllBtn">ler todos em sequência</button>
+          <button class="btn btn-ghost" id="surpriseBtn">me surpreenda</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="cardScreen" class="screen">
+      <div class="card-wrap">
+        <div class="progress-area">
+          <div class="progress-top">
+            <span id="counter">1 de 8</span>
+            <span id="modeLabel">abra com carinho</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <article class="memory-card" id="memoryCard">
+          <div class="card-content">
+            <div class="card-kicker" id="cardKicker">lembrete 01</div>
+            <h2 class="card-title" id="cardTitle"></h2>
+            <p class="card-message" id="cardMessage"></p>
+          </div>
+
+          <div class="card-actions">
+            <button class="icon-btn" id="prevBtn" aria-label="Lembrete anterior">←</button>
+            <button class="btn btn-primary" id="nextBtn">próximo lembrete</button>
+            <button class="btn btn-secondary back-options" id="backOptionsBtn">voltar às opções</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="responsesListScreen" class="screen">
+      <div class="panel responses-panel">
+        <div class="responses-intro">
+          <div class="eyebrow">correio guardado</div>
+          <h2 class="choice-title"><span class="gradient-text">Mensagens que recebi</span></h2>
+          <p class="choice-subtitle">
+            Escolhe uma carta que me mandou para ter resposta, caso quiser.
+          </p>
+        </div>
+
+        <div id="responsesContainer">
+          <div class="no-responses">
+            <div class="no-responses-icon">💬</div>
+            <p>Ainda não há respostas. Mas em breve, quando você enviar uma mensagem, eu respondo aqui. 🤍</p>
+          </div>
+        </div>
+
+        <div class="choice-footer">
+          <button class="btn btn-secondary" id="backFromResponsesList">voltar ao início</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="responseDetailScreen" class="screen">
+      <div class="card-wrap response-wrap">
+        <div class="response-topline">
+          <div class="response-pill" id="responseTopic"></div>
+          <div class="response-date" id="responseDateTime"></div>
+        </div>
+
+        <article class="response-card" id="responseCard">
+          <div class="response-card-head">
+            <div>
+              <div class="response-kicker">correio recebido</div>
+              <h2 class="response-title" id="responseTitle"></h2>
+            </div>
+          </div>
+
+          <div class="response-tabs" role="tablist" aria-label="Alternar conteúdo da resposta">
+            <button class="response-tab active" type="button" data-response-view="context">Sua Mensagem</button>
+            <button class="response-tab" type="button" data-response-view="reply">Minha resposta</button>
+          </div>
+
+          <div class="response-reader response-reader-context active" id="responseContextPanel">
+            <label class="response-label">Sua mensagem</label>
+            <div class="response-user-message" id="responseUserMessage"></div>
+          </div>
+
+          <div class="response-reader response-reader-reply" id="responseReplyPanel">
+            <label class="response-label">Minha resposta</label>
+            <p class="response-message" id="responseMessage"></p>
+          </div>
+
+          <div class="response-footer">
+            <span>💜</span>
+            <span>Use as abas acima para navegar sem perder conforto de leitura.</span>
+          </div>
+
+          <div class="response-actions">
+            <button class="btn btn-secondary back-options" id="backFromResponseDetailBtn">voltar</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="finalScreen" class="screen final-screen">
+      <div class="final-card">
+        <div class="photo-carousel">
+          <img src="images/foto1.jpg">
+          <img src="images/foto2.jpg">
+          <img src="images/foto3.jpg">
+          <img src="images/foto4.jpg">
+          <img src="images/foto6.jpg">
+          <img src="images/foto7.jpg">
+          <img src="images/foto8.jpg">
+        </div>
+        <div class="secret-tag">♡</div>
+        <div class="eyebrow">um último lembrete</div>
+        <h2><span class="gradient-text">Esse cantinho continua sendo seu</span></h2>
+        <p class="final-text">
+          Eu não fiz isso esperando uma data, um motivo ou uma resposta específica.
+          Fiz porque você merece ser lembrada do quanto é especial sem precisar pedir por isso.
+          <br><br>
+          Você pode voltar aqui quando quiser. Mas espero que, aos poucos, nem precise tanto.
+          Porque você merece lembrar disso sozinha também.
+        </p>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="restartBtn">começar de novo</button>
+          <button class="btn btn-secondary" id="backToChoicesFinalBtn">voltar aos lembretes</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="formScreen" class="screen">
+        <div class="panel">
+            <h2 class="choice-title">
+            <span class="gradient-text">Um espacinho só seu</span>
+            </h2>
+
+            <p class="choice-subtitle">
+            Se quiser, pode me deixar um pedacinho do seu dia aqui.<br><br>
+            Pode ser algo bom, algo difícil ou só qualquer pensamento.
+            <br><br>
+            Eu vou ler com carinho 🤍
+            </p>
+
+            <form id="messageForm" action="https://formspree.io/f/xlgzjeda" method="POST">
+
+            <input type="hidden" name="tipo" id="moodValue" />
+            <input type="hidden" name="quer_resposta" id="wantsResponseValue" value="sim" />
+
+            <div class="mood-selector" id="moodSelector">
+              <button type="button" class="mood-btn" data-value="💭 Quero desabafar">💭 Quero desabafar</button>
+              <button type="button" class="mood-btn" data-value="🤍 Algo que estou sentindo">🤍 Algo que estou sentindo</button>
+              <button type="button" class="mood-btn" data-value="✨ Um desejo">✨ Um desejo</button>
+              <button type="button" class="mood-btn" data-value="😔 Uma insegurança">😔 Uma insegurança</button>
+              <button type="button" class="mood-btn" data-value="😊 Algo bom que aconteceu">😊 Algo bom que aconteceu</button>
+            </div>
+
+            <textarea 
+                name="mensagem" 
+                rows="6" 
+                placeholder="Pode escrever sem filtro…"
+                required
+                style="width:100%; margin-top:14px; padding:14px; border-radius:18px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); color:var(--text); font:inherit; font-size:1rem; line-height:1.6; resize:vertical; outline:none; transition: border-color 200ms ease;">
+            </textarea>
+
+            <!-- Toggle para solicitar resposta -->
+            <div style="margin-top: 20px; display: flex; align-items: center; gap: 12px;">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--muted); font-size: 0.95rem;">
+                <input type="checkbox" id="wantsResponseToggle" checked style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--purple);" />
+                Gostaria que eu respondesse? 🤍
+              </label>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">
+                enviar 💌
+                </button>
+
+                <button type="button" class="btn btn-secondary" id="backFromForm">
+                voltar
+                </button>
+            </div>
+
+            </form>
+
+            <!-- Estado de sucesso aprimorado -->
+            <div class="form-success-state" id="formSuccessState" style="display: none; text-align: center; padding: 24px 0 8px; animation: fadeUp 500ms ease both;">
+              <span style="font-size: 2.8rem; display: block; margin-bottom: 14px; animation: successPop 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both;">💌</span>
+              <h3 style="font-size: 1.5rem; letter-spacing: -0.04em; margin-bottom: 8px;"><span class="gradient-text">Recebi com carinho</span></h3>
+              <p style="color: var(--muted); font-size: 0.98rem; line-height: 1.6; margin-bottom: 24px;">Sua mensagem chegou até mim.<br>Vou ler com calma e atenção. 🤍</p>
+              <div class="actions" style="justify-content:center;">
+                <button class="btn btn-primary" id="backFromFormSuccess">voltar ao início</button>
+              </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="secretScreen" class="screen">
+        <div class="panel" style="text-align:center;">
+            <p style="margin-bottom:20px; color: var(--muted);">
+            não era pra ser nada grande…<br>
+            só algo que eu quis guardar pra você
+            </p>
+
+            <img src="images/foto5.jpg"
+                alt="Segredo" 
+                style="max-width:100%; border-radius:20px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);" />
+
+            <div class="actions" style="margin-top: 24px;">
+            <button class="btn btn-secondary" id="backFromSecret">voltar</button>
+            </div>
+        </div>
+    </section>
+
+  </main>
+
+  <!-- ── Modal de senha elegante ── -->
+  <div class="password-modal-overlay" id="passwordModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="password-modal">
+      <span class="modal-icon">🔒</span>
+      <h3 id="modalTitle"><span class="gradient-text">Área secreta</span></h3>
+      <p>Só pra quem sabe o caminho</p>
+      <input type="password" id="passwordInput" placeholder="••••••••" maxlength="20" autocomplete="off" />
+      <p class="modal-error" id="modalError"></p>
+      <div class="modal-btns">
+        <button class="btn btn-secondary" id="modalCancelBtn">cancelar</button>
+        <button class="btn btn-primary" id="modalConfirmBtn">entrar</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
     .password-modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(4, 1, 12, 0.72);
+      background: rgba(4, 1, 12, 0.84);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       z-index: 9999;
@@ -641,7 +1405,7 @@
       transform: translateY(0) scale(1);
     }
 
-    .password-modal .modal-icon {
+    .modal-icon {
       font-size: 2.4rem;
       margin-bottom: 14px;
       display: block;
@@ -698,7 +1462,7 @@
       80% { transform: translateX(6px); }
     }
 
-    .password-modal .modal-error {
+    .modal-error {
       color: rgba(240, 130, 130, 0.9);
       font-size: 0.88rem;
       margin-bottom: 14px;
@@ -706,24 +1470,20 @@
       transition: opacity 200ms ease;
     }
 
-    .password-modal .modal-btns {
+    .modal-btns {
       display: flex;
       gap: 10px;
     }
 
-    .password-modal .modal-btns button {
+    .modal-btns button {
       flex: 1;
     }
 
-    /* ── Form success aprimorado ── */
     .form-success-state {
-      display: none;
-      text-align: center;
-      padding: 24px 0 8px;
       animation: fadeUp 500ms ease both;
     }
 
-    .form-success-state .success-icon {
+    .success-icon {
       font-size: 2.8rem;
       display: block;
       margin-bottom: 14px;
@@ -733,24 +1493,6 @@
     @keyframes successPop {
       from { transform: scale(0.4); opacity: 0; }
       to   { transform: scale(1);   opacity: 1; }
-    }
-
-    .form-success-state h3 {
-      font-size: 1.5rem;
-      letter-spacing: -0.04em;
-      margin-bottom: 8px;
-    }
-
-    .form-success-state p {
-      color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-
-    /* ── Badge "lido" nos cards de escolha ── */
-    .choice-card {
-      position: relative;
     }
 
     .choice-card.read::after {
@@ -774,7 +1516,6 @@
       border-color: rgba(196, 181, 253, 0.28);
     }
 
-    /* ── Seletor de humor com emojis ── */
     .mood-selector {
       display: flex;
       flex-wrap: wrap;
@@ -810,7 +1551,6 @@
       box-shadow: 0 0 0 3px rgba(196, 181, 253, 0.1);
     }
 
-    /* ── Banner de visita especial / data especial ── */
     .special-banner {
       display: none;
       margin-top: 20px;
@@ -829,7 +1569,6 @@
       display: block;
     }
 
-    /* ── FadeOut na troca de telas ── */
     .screen.leaving {
       animation: fadeOut 220ms ease forwards;
       pointer-events: none;
@@ -839,699 +1578,824 @@
       from { opacity: 1; transform: translateY(0) scale(1); }
       to   { opacity: 0; transform: translateY(-10px) scale(0.988); }
     }
-
   </style>
-</head>
-
-<body>
-  <main class="app">
-    <section id="startScreen" class="screen active">
-      <div class="hero">
-        <div class="eyebrow">♡ um lembrete só seu</div>
-        <h1><span class="gradient-text">Um cantinho para Você</span></h1>
-        <p>
-          Oii, Ray.<br><br>
-          Esse site não é por nenhuma data especial. Não é aniversário, não é comemoração, não é desculpa para nada e nem por nada.<br><br>
-          É só porque às vezes eu acho que você merece ser lembrada do quanto é especial e importante.
-        </p>
-        <br></br>
-
-        <p class="opening-phrase" id="openingPhrase"></p>
-
-        <!-- Banner especial — aparece em datas ou visitas especiais -->
-        <div class="special-banner" id="specialBanner"></div>
-
-        <div class="actions">
-          <button class="btn btn-primary" id="startBtn">começar</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="choiceScreen" class="screen">
-      <div class="panel">
-        <h2 class="choice-title"><span class="gradient-text">O que seu coração precisa hoje?</span></h2>
-        <p class="choice-subtitle">
-          Escolhe um lembrete que combine com o seu agora. Ou, se quiser, lê tudo em sequência.
-        </p>
-
-        <div class="choice-grid" id="choiceGrid"></div>
-
-        <div class="choice-footer">
-          <button class="btn btn-primary" id="readAllBtn">ler todos em sequência</button>
-          <button class="btn btn-ghost" id="surpriseBtn">me surpreenda</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="cardScreen" class="screen">
-      <div class="card-wrap">
-        <div class="progress-area">
-          <div class="progress-top">
-            <span id="counter">1 de 8</span>
-            <span id="modeLabel">abra com carinho</span>
-          </div>
-          <div class="progress-track" aria-hidden="true">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
-        </div>
-
-        <article class="memory-card" id="memoryCard">
-          <div class="card-content">
-            <div class="card-kicker" id="cardKicker">lembrete 01</div>
-            <h2 class="card-title" id="cardTitle"></h2>
-            <p class="card-message" id="cardMessage"></p>
-          </div>
-
-          <div class="card-actions">
-            <button class="icon-btn" id="prevBtn" aria-label="Lembrete anterior">←</button>
-            <button class="btn btn-primary" id="nextBtn">próximo lembrete</button>
-            <button class="btn btn-secondary back-options" id="backOptionsBtn">voltar às opções</button>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="finalScreen" class="screen final-screen">
-      <div class="final-card">
-
-      <div class="photo-carousel">
-        <img src="images/foto1.jpg">
-        <img src="images/foto2.jpg">
-        <img src="images/foto3.jpg">
-        <img src="images/foto4.jpg">
-      </div>
-        <div class="secret-tag">♡</div>
-        <div class="eyebrow">um último lembrete</div>
-        <h2><span class="gradient-text">Esse cantinho continua sendo seu</span></h2>
-        <p class="final-text">
-          Eu não fiz isso esperando uma data, um motivo ou uma resposta específica.
-          Fiz porque você merece ser lembrada do quanto é especial sem precisar pedir por isso.
-          <br><br>
-          Você pode voltar aqui quando quiser. Mas espero que, aos poucos, nem precise tanto.
-          Porque você merece lembrar disso sozinha também.
-        </p>
-
-        <div class="actions">
-          <button class="btn btn-primary" id="restartBtn">começar de novo</button>
-          <button class="btn btn-secondary" id="backToChoicesFinalBtn">voltar aos lembretes</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="formScreen" class="screen">
-        <div class="panel">
-            <h2 class="choice-title">
-            <span class="gradient-text">Um espacinho só seu</span>
-            </h2>
-
-            <p class="choice-subtitle">
-            Se quiser, pode me deixar um pedacinho do seu dia aqui.<br><br>
-            Pode ser algo bom, algo difícil ou só qualquer pensamento.
-            <br><br>
-            Eu vou ler com carinho 🤍
-            </p>
-
-            <form id="messageForm" action="https://formspree.io/f/xlgzjeda" method="POST">
-
-            <!-- Campo oculto que recebe o valor do humor selecionado -->
-            <input type="hidden" name="tipo" id="moodValue" />
-
-            <div class="mood-selector" id="moodSelector">
-              <button type="button" class="mood-btn" data-value="💭 Quero desabafar">💭 Quero desabafar</button>
-              <button type="button" class="mood-btn" data-value="🤍 Algo que estou sentindo">🤍 Algo que estou sentindo</button>
-              <button type="button" class="mood-btn" data-value="✨ Um desejo">✨ Um desejo</button>
-              <button type="button" class="mood-btn" data-value="😔 Uma insegurança">😔 Uma insegurança</button>
-              <button type="button" class="mood-btn" data-value="😊 Algo bom que aconteceu">😊 Algo bom que aconteceu</button>
-            </div>
-
-            <textarea 
-                name="mensagem" 
-                rows="6" 
-                placeholder="Pode escrever sem filtro…"
-                required
-                style="width:100%; margin-top:14px; padding:14px; border-radius:18px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.16); color:var(--text); font:inherit; font-size:1rem; line-height:1.6; resize:vertical; outline:none; transition: border-color 200ms ease;">
-            </textarea>
-
-            <div class="actions">
-                <button type="submit" class="btn btn-primary">
-                enviar 💌
-                </button>
-
-                <button type="button" class="btn btn-secondary" id="backFromForm">
-                voltar
-                </button>
-            </div>
-
-            <p id="formSuccess" style="display:none; margin-top:18px;">
-                Recebi. Vou ler com carinho 🤍
-            </p>
-
-            </form>
-
-            <!-- Estado de sucesso aprimorado -->
-            <div class="form-success-state" id="formSuccessState">
-              <span class="success-icon">💌</span>
-              <h3><span class="gradient-text">Recebi com carinho</span></h3>
-              <p>Sua mensagem chegou até mim.<br>Vou ler com calma e atenção. 🤍</p>
-              <div class="actions" style="justify-content:center;">
-                <button class="btn btn-primary" id="backFromFormSuccess">voltar ao início</button>
-              </div>
-            </div>
-
-        </div>
-
-    </section>
-
-        <section id="secretScreen" class="screen">
-
-        <div class="panel" style="text-align:center;">
-
-            <p style="margin-bottom:20px; color: var(--muted);">
-            não era pra ser nada grande…<br>
-            só algo que eu quis guardar pra você
-            </p>
-
-            <img src="images/foto5.jpg"
-                alt="Segredo" 
-                style="max-width:100%; border-radius:20px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);" />
-
-            <div class="actions" style="margin-top: 24px;">
-            <button class="btn btn-secondary" id="backFromSecret">voltar</button>
-            </div>
-
-        </div>
-
-        </section>
-
-  </main>
-
-  <!-- ── Modal de senha elegante ── -->
-  <div class="password-modal-overlay" id="passwordModalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="password-modal">
-      <span class="modal-icon">🔒</span>
-      <h3 id="modalTitle"><span class="gradient-text">Área secreta</span></h3>
-      <p>Só pra quem sabe o caminho</p>
-      <input type="password" id="passwordInput" placeholder="••••••••" maxlength="20" autocomplete="off" />
-      <p class="modal-error" id="modalError"></p>
-      <div class="modal-btns">
-        <button class="btn btn-secondary" id="modalCancelBtn">cancelar</button>
-        <button class="btn btn-primary" id="modalConfirmBtn">entrar</button>
-      </div>
-    </div>
-  </div>
 
     <button id="floatingFormBtn">💌</button>
+    <button id="floatingResponsesBtn">📬<span class="badge-new" id="responseBadge" style="display:none;">1</span></button>
     <button id="secretBtn" title="Área secreta">🔒</button>
 
   <script>
 
-        const formScreen = document.getElementById("formScreen");
-        const floatingFormBtn = document.getElementById("floatingFormBtn");
-        const backFromForm = document.getElementById("backFromForm");
-        const form = document.getElementById("messageForm");
-        const formSuccess = document.getElementById("formSuccess");
-        const formSuccessState = document.getElementById("formSuccessState");
-        const backFromFormSuccess = document.getElementById("backFromFormSuccess");
-
-        const secretScreen = document.getElementById("secretScreen");
-        const backFromSecret = document.getElementById("backFromSecret");
-
-        // ── Modal de senha ──
-        const passwordModalOverlay = document.getElementById("passwordModalOverlay");
-        const passwordInput = document.getElementById("passwordInput");
-        const modalError = document.getElementById("modalError");
-        const modalConfirmBtn = document.getElementById("modalConfirmBtn");
-        const modalCancelBtn = document.getElementById("modalCancelBtn");
-
-        // Hash SHA-256 da senha "29032026" — a senha real nunca fica exposta no código
-        const SENHA_HASH = "4c362809b6d47734aed70ca921793b4b1a0ab197e83fc7906ea5455357c44989";
-
-        async function hashString(str) {
-          const encoder = new TextEncoder();
-          const data = encoder.encode(str);
-          const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-          const hashArray = Array.from(new Uint8Array(hashBuffer));
-          return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-        }
-
-        function openPasswordModal() {
-          passwordInput.value = "";
-          modalError.textContent = "";
-          passwordInput.classList.remove("shake");
-          passwordModalOverlay.classList.add("open");
-          setTimeout(() => passwordInput.focus(), 350);
-        }
-
-        function closePasswordModal() {
-          passwordModalOverlay.classList.remove("open");
-        }
-
-        async function tryPassword() {
-          const typed = passwordInput.value.trim();
-          if (!typed) return;
-
-          const hashed = await hashString(typed);
-
-          if (hashed === SENHA_HASH) {
-            closePasswordModal();
-            openSecret();
-          } else {
-            modalError.textContent = "Senha incorreta. Tenta de novo 🔐";
-            passwordInput.classList.remove("shake");
-            passwordInput.offsetHeight; // force reflow
-            passwordInput.classList.add("shake");
-            passwordInput.value = "";
-            setTimeout(() => passwordInput.focus(), 50);
-          }
-        }
-
-        modalConfirmBtn.addEventListener("click", tryPassword);
-
-        passwordInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") tryPassword();
-          if (e.key === "Escape") closePasswordModal();
-        });
-
-        modalCancelBtn.addEventListener("click", closePasswordModal);
-
-        passwordModalOverlay.addEventListener("click", (e) => {
-          if (e.target === passwordModalOverlay) closePasswordModal();
-        });
-
-        // ── Área secreta ──
-        function openSecret() {
-          showScreen(secretScreen);
-        }
-
-        backFromSecret.addEventListener("click", () => {
-          openChoices();
-        });
-
-        // ── Botão flutuante do formulário ──
-        floatingFormBtn.addEventListener("click", () => {
-          showScreen(formScreen);
-        });
-
-        backFromForm.addEventListener("click", () => {
-          showScreen(startScreen);
-        });
-
-        // Voltar do estado de sucesso
-        backFromFormSuccess.addEventListener("click", () => {
-          showScreen(startScreen);
-          // Reset para próximo uso
-          form.style.display = "block";
-          formSuccessState.style.display = "none";
-        });
-
-        // ── Envio do formulário com feedback melhorado ──
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-
-          const submitBtn = form.querySelector('[type="submit"]');
-          submitBtn.disabled = true;
-          submitBtn.textContent = "enviando… 💌";
-
-          try {
-            const data = new FormData(form);
-
-            await fetch(form.action, {
-              method: "POST",
-              body: data,
-              headers: { "Accept": "application/json" }
-            });
-
-            form.reset();
-            // Esconde o form e mostra o estado de sucesso
-            form.style.display = "none";
-            formSuccessState.style.display = "block";
-
-          } catch (err) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = "enviar 💌";
-            alert("Ops, algo deu errado. Tenta de novo?");
-          }
-        });
-
-        // ── Dados e lembretes ──
-        const memories = [
-        {
-            icon: "✨",
-            short: "Quando você esquecer o quanto é linda",
-            title: "Abra quando esquecer o quão linda é",
-            message: `Eu queria que você pudesse se ver por um instante do jeito que eu te vejo.
-
-            Não é só sobre aparência, mesmo você sendo linda. É sobre o jeito que você existe no mundo, como fala, sorri, olha, admira, pensa e sente.
-
-            Você tem algo muito especial, e o mais bonito é que isso simplesmente acontece, sem esforço.`
-        },
-        {
-            icon: "🌙",
-            short: "Quando você sentir que não é o bastante",
-            title: "Abra quando o mundo fizer você duvidar de si",
-            message: `Você não precisa dar conta de tudo para continuar sendo alguém incrível.
-
-            Mesmo nos dias em que você duvida de si, ainda existe tanta coisa bonita em você. Seu jeito, sua presença, sua energia, sua história.
-
-            Você importa muito mais do que talvez perceba.`
-        },
-        {
-            icon: "☀️",
-            short: "Pra te arrancar um sorriso",
-            title: "Abra quando precisar sorrir",
-            message: `Tem algo no seu olhar que traz um brilho especial para o mundo. Não sei explicar direito, só sei que é especial.
-
-            E sim, eu sei que isso parece meio bobo...
-
-            Mas algumas das coisas mais verdadeiras que a gente sente acabam soando assim mesmo, né?`
-        },
-        {
-            icon: "👀",
-            short: "Quero te lembrar do que eu vejo em você",
-            title: "Abra quando quiser saber o que eu vejo em você",
-            message: `Vejo alguém linda — mas não de um jeito comum.
-
-            Vejo alguém com detalhes que ficam na cabeça. Um jeito único de falar, de reagir, de existir.
-
-            Vejo o jeito como você tenta se esconder quando fica tímida… e como, mesmo assim, ainda consegue ser a coisa mais bonita ali.
-
-            Vejo alguém que dá vontade de conhecer mais, cuidar mais e ter sempre por perto.`
-        },
-        {
-            icon: "🤍",
-            short: "Quando o dia estiver pesado",
-            title: "Abra quando estiver tendo um dia difícil",
-            message: `Ei… respira um pouquinho.
-
-            Você não precisa resolver tudo agora. Não precisa estar bem o tempo todo. Não precisa carregar o mundo nas costas.
-
-            Só queria que você lembrasse que você não está sozinha e que eu gosto muito de você — e me sinto especial por ter você aqui.`
-        },
-        {
-            icon: "⭐",
-            short: "Quando precisar de motivação",
-            title: "Abra quando estiver desmotivada",
-            message: `Se hoje estiver faltando motivação, tudo bem.
-
-            Você não precisa estar sempre animada pra continuar. Vai no seu tempo, do seu jeito.
-
-            Mas não esquece: cuidar de você também é uma forma de carinho — mesmo nos dias em que dá mais trabalho.
-            
-            E se em algum momento ficar difícil demais se motivar… não guarda só pra você. Pode vir até mim.`
-        },
-        {
-            icon: "♡",
-            short: "Quero um carinho",
-            title: "Abra quando quiser um carinho",
-            message: `Queria poder te dar um abraço daqueles bem apertados que fazem o mundo ficar quieto por alguns segundos.
-
-            Mas enquanto isso não é possível... deixa eu te lembrar de uma coisa:
-
-            Você é querida, admirável e muito especial pra mim. Nunca deixe de ser você mesma`
-        },
-        {
-            icon: "🎁",
-            short: "Um pequeno presente",
-            title: "Abra agora",
-            message: `Eu poderia ter esperado uma data especial para fazer isso.
-
-            Mas achei mais bonito fazer do nada. Porque você não merece ser lembrada só em dias marcados.
-
-            Você merece ser lembrada numa terça qualquer, no meio da rotina, sem motivo nenhum — só porque você merece.`
-        }
-        ];
-
-        const openingPhrases = [
-        "Hoje também é um bom dia para lembrar que você é especial.",
-        "Esse cantinho continua aqui sempre que você precisar.",
-        "Nem todo carinho precisa esperar uma data.",
-        "Algumas pessoas merecem lembretes bonitos no meio da rotina.",
-        "Tem dias em que a gente só precisa de um pouco de carinho.",
-        "Você não precisa se esforçar para merecer cuidado.",
-        "Às vezes, ser lembrada com carinho já muda o dia.",
-        "Volta aqui sempre que o mundo parecer pesado demais.",
-        "Você merece delicadeza até nos dias comuns.",
-        "Estar com você sempre é um momento idílico",
-        "Algumas coisas bonitas precisam ser ditas mais de uma vez.",
-        "Não é exagero lembrar alguém do quanto ela importa.",
-        "Talvez hoje você só precise respirar e receber um lembrete bom.",
-        "Você é mais especial do que imagina nos dias em que duvida disso.",
-        "Esse site é pequeno, mas foi feito com intenção.",
-        "Que esse lembrete encontre você no momento certo.",
-        "Você não precisa estar bem o tempo todo para continuar sendo incrível.",
-        "Tem beleza no seu jeito de existir.",
-        "Um carinho inesperado também é uma forma de cuidado.",
-        "Quando esquecer, volta aqui. Eu deixei algumas verdades guardadas.",
-        "Esse não é um presente de data marcada. É só um carinho no meio do caminho."
-        ];
-
-        const startScreen = document.getElementById("startScreen");
-        const choiceScreen = document.getElementById("choiceScreen");
-        const cardScreen = document.getElementById("cardScreen");
-        const finalScreen = document.getElementById("finalScreen");
-
-        const startBtn = document.getElementById("startBtn");
-        const readAllBtn = document.getElementById("readAllBtn");
-        const surpriseBtn = document.getElementById("surpriseBtn");
-        const nextBtn = document.getElementById("nextBtn");
-        const prevBtn = document.getElementById("prevBtn");
-        const backOptionsBtn = document.getElementById("backOptionsBtn");
-        const restartBtn = document.getElementById("restartBtn");
-        const backToChoicesFinalBtn = document.getElementById("backToChoicesFinalBtn");
-
-        const choiceGrid = document.getElementById("choiceGrid");
-        const openingPhrase = document.getElementById("openingPhrase");
-        const memoryCard = document.getElementById("memoryCard");
-        const cardKicker = document.getElementById("cardKicker");
-        const cardTitle = document.getElementById("cardTitle");
-        const cardMessage = document.getElementById("cardMessage");
-        const counter = document.getElementById("counter");
-        const modeLabel = document.getElementById("modeLabel");
-        const progressFill = document.getElementById("progressFill");
-
-        let currentIndex = 0;
-        let sequenceMode = false;
-
-        function setOpeningPhrase() {
-        const randomIndex = Math.floor(Math.random() * openingPhrases.length);
-        openingPhrase.textContent = openingPhrases[randomIndex];
-        }
-
-        // ── FadeOut ao trocar de tela ──
-        function showScreen(screen) {
-          const current = [startScreen, choiceScreen, cardScreen, finalScreen, formScreen, secretScreen]
-            .find(s => s.classList.contains("active"));
-
-          if (current && current !== screen) {
-            current.classList.add("leaving");
-            setTimeout(() => {
-              current.classList.remove("active", "leaving");
-              screen.classList.add("active");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }, 210);
-          } else {
-            [startScreen, choiceScreen, cardScreen, finalScreen, formScreen, secretScreen]
-              .forEach(s => s.classList.remove("active", "leaving"));
-            screen.classList.add("active");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }
-        }
-
-        // ── Memória de lembretes lidos (localStorage) ──
-        function getReadSet() {
-          try {
-            return new Set(JSON.parse(localStorage.getItem("readCards") || "[]"));
-          } catch { return new Set(); }
-        }
-
-        function markAsRead(index) {
-          const read = getReadSet();
-          read.add(index);
-          try { localStorage.setItem("readCards", JSON.stringify([...read])); } catch {}
-        }
-
-        function renderChoices() {
-          const readSet = getReadSet();
-          choiceGrid.innerHTML = memories.map((memory, index) => `
-            <button class="choice-card${readSet.has(index) ? " read" : ""}" type="button" data-index="${index}">
-              <div class="choice-icon">${memory.icon}</div>
-              <span>lembrete ${String(index + 1).padStart(2, "0")}</span>
-              <strong>${memory.short}</strong>
-            </button>
-          `).join("");
-
-          choiceGrid.querySelectorAll(".choice-card").forEach((button) => {
-            button.addEventListener("click", () => {
-              sequenceMode = false;
-              openCard(Number(button.dataset.index));
-            });
-          });
-        }
-
-        function renderCard() {
-        const memory = memories[currentIndex];
-        const number = String(currentIndex + 1).padStart(2, "0");
-
-        cardKicker.textContent = `${memory.icon} lembrete ${number}`;
-        cardTitle.textContent = memory.title;
-        cardMessage.textContent = memory.message;
-        counter.textContent = `${currentIndex + 1} de ${memories.length}`;
-        modeLabel.textContent = sequenceMode ? "lendo em sequência" : "lembrete escolhido";
-        progressFill.style.width = `${((currentIndex + 1) / memories.length) * 100}%`;
-
-        prevBtn.disabled = currentIndex === 0;
-        nextBtn.textContent = currentIndex === memories.length - 1
-            ? (sequenceMode ? "abrir último lembrete" : "voltar às opções")
-            : "próximo lembrete";
-
-        memoryCard.style.animation = "none";
-        memoryCard.offsetHeight;
-        memoryCard.style.animation = "cardIn 560ms ease both";
-        }
-
-        function openCard(index) {
-          currentIndex = index;
-          markAsRead(index);
-          renderCard();
-          showScreen(cardScreen);
-          // Scroll suave até o card em mobile
-          setTimeout(() => {
-            memoryCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
-          }, 260);
-        }
-
-        function openChoices() {
-        renderChoices();
-        showScreen(choiceScreen);
-        }
-
-        startBtn.addEventListener("click", () => {
-        openChoices();
-        });
-
-        readAllBtn.addEventListener("click", () => {
-        sequenceMode = true;
-        openCard(0);
-        });
-
-        surpriseBtn.addEventListener("click", () => {
-        sequenceMode = false;
-        const randomIndex = Math.floor(Math.random() * memories.length);
-        openCard(randomIndex);
-        });
-
-        nextBtn.addEventListener("click", () => {
-        if (currentIndex < memories.length - 1) {
-            currentIndex += 1;
-            renderCard();
-            return;
-        }
-
-        if (sequenceMode) {
-            showScreen(finalScreen);
-        } else {
-            openChoices();
-        }
-        });
-
-        prevBtn.addEventListener("click", () => {
-        if (currentIndex > 0) {
-            currentIndex -= 1;
-            renderCard();
-        }
-        });
-
-        backOptionsBtn.addEventListener("click", () => {
-        sequenceMode = false;
-        openChoices();
-        });
-
-        restartBtn.addEventListener("click", () => {
-        sequenceMode = true;
-        openCard(0);
-        });
-
-        backToChoicesFinalBtn.addEventListener("click", () => {
-        sequenceMode = false;
-        openChoices();
-        });
-
-        setOpeningPhrase();
-        renderChoices();
-
-        // ── Contador de visitas + mensagem especial ──
-        const specialBanner = document.getElementById("specialBanner");
-
-        function checkVisitAndDates() {
-          // Contador de visitas
-          let visits = 0;
-          try { visits = parseInt(localStorage.getItem("visitCount") || "0") + 1; } catch {}
-          try { localStorage.setItem("visitCount", visits); } catch {}
-
-          const now = new Date();
-          const month = now.getMonth() + 1; // 1–12
-          const day = now.getDate();
-
-          // ── Datas especiais — edite aqui à vontade ──
-          const specialDates = [
-            { month: 11,  day: 8, msg: "✨ Feliz aniversário! Que esse dia seja tão bonito quanto você merece. 🎂" },
-            // Adicione mais datas aqui:
-            { month: 3, day: 29, msg: "💜 Faz exatos 1 ano que tive o prazer de sentir sua boca na minha. Espero qu8e venha mais anos por ai...." },
-          ];
-
-          const todaySpecial = specialDates.find(d => d.month === month && d.day === day);
-
-          // ── Mensagens por número de visitas ──
-          const visitMessages = {
-            10: "Dez vezes aqui. Esse lugar existe por você. 💜",
-            20: "Vinte visitas. Você merece um abraço imenso e muitos beijos. 🫂",
-            50: "Cinquenta vezes. Obrigado por sempre voltar. ♡",
-          };
-
-          if (todaySpecial) {
-            specialBanner.textContent = todaySpecial.msg;
-            specialBanner.classList.add("show");
-          } else if (visitMessages[visits]) {
-            specialBanner.textContent = visitMessages[visits];
-            specialBanner.classList.add("show");
-          }
-        }
-
-        checkVisitAndDates();
-
-        // ── Carrossel de fotos ──
-        const photos = document.querySelectorAll(".photo-carousel img");
-        let photoIndex = 0;
-
-        function showNextPhoto() {
-        if (!photos.length) return;
-
-        photos.forEach(p => p.classList.remove("active"));
-        photos[photoIndex].classList.add("active");
-
-        photoIndex = (photoIndex + 1) % photos.length;
-        }
-
-        setInterval(showNextPhoto, 5000);
-        showNextPhoto();
-
-        // ── Seletor de humor com emojis ──
-        const moodSelector = document.getElementById("moodSelector");
-        const moodValue = document.getElementById("moodValue");
-
-        moodSelector.querySelectorAll(".mood-btn").forEach(btn => {
-          btn.addEventListener("click", () => {
-            moodSelector.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("selected"));
-            btn.classList.add("selected");
-            moodValue.value = btn.dataset.value;
-          });
-        });
-
-        // ── Botão secreto abre o modal elegante ──
-        const secretBtn = document.getElementById("secretBtn");
-        secretBtn.addEventListener("click", () => {
-          openPasswordModal();
-        });
+const formScreen = document.getElementById("formScreen");
+const floatingFormBtn = document.getElementById("floatingFormBtn");
+const floatingResponsesBtn = document.getElementById("floatingResponsesBtn");
+const responseBadge = document.getElementById("responseBadge");
+const backFromForm = document.getElementById("backFromForm");
+const form = document.getElementById("messageForm");
+const formSuccessState = document.getElementById("formSuccessState");
+const backFromFormSuccess = document.getElementById("backFromFormSuccess");
+const secretScreen = document.getElementById("secretScreen");
+const backFromSecret = document.getElementById("backFromSecret");
+
+const responsesListScreen = document.getElementById("responsesListScreen");
+const responseDetailScreen = document.getElementById("responseDetailScreen");
+const responsesContainer = document.getElementById("responsesContainer");
+const backFromResponsesList = document.getElementById("backFromResponsesList");
+const backFromResponseDetailBtn = document.getElementById("backFromResponseDetailBtn");
+
+const passwordModalOverlay = document.getElementById("passwordModalOverlay");
+const passwordInput = document.getElementById("passwordInput");
+const modalError = document.getElementById("modalError");
+const modalConfirmBtn = document.getElementById("modalConfirmBtn");
+const modalCancelBtn = document.getElementById("modalCancelBtn");
+
+const SENHA_HASH = "4c362809b6d47734aed70ca921793b4b1a0ab197e83fc7906ea5455357c44989";
+
+async function hashString(str) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+function openPasswordModal() {
+  passwordInput.value = "";
+  modalError.textContent = "";
+  passwordInput.classList.remove("shake");
+  passwordModalOverlay.classList.add("open");
+  setTimeout(() => passwordInput.focus(), 350);
+}
+
+function closePasswordModal() {
+  passwordModalOverlay.classList.remove("open");
+}
+
+async function tryPassword() {
+  const typed = passwordInput.value.trim();
+  if (!typed) return;
+
+  const hashed = await hashString(typed);
+
+  if (hashed === SENHA_HASH) {
+    closePasswordModal();
+    openSecret();
+  } else {
+    modalError.textContent = "Senha incorreta. Tenta de novo 🔐";
+    passwordInput.classList.remove("shake");
+    passwordInput.offsetHeight;
+    passwordInput.classList.add("shake");
+    passwordInput.value = "";
+    setTimeout(() => passwordInput.focus(), 50);
+  }
+}
+
+modalConfirmBtn.addEventListener("click", tryPassword);
+
+passwordInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") tryPassword();
+  if (e.key === "Escape") closePasswordModal();
+});
+
+modalCancelBtn.addEventListener("click", closePasswordModal);
+
+passwordModalOverlay.addEventListener("click", (e) => {
+  if (e.target === passwordModalOverlay) closePasswordModal();
+});
+
+function openSecret() {
+  showScreen(secretScreen);
+}
+
+backFromSecret.addEventListener("click", () => {
+  openChoices();
+});
+
+floatingFormBtn.addEventListener("click", () => {
+  showScreen(formScreen);
+});
+
+backFromForm.addEventListener("click", () => {
+  showScreen(startScreen);
+});
+
+backFromFormSuccess.addEventListener("click", () => {
+  showScreen(startScreen);
+  form.style.display = "block";
+  formSuccessState.style.display = "none";
+});
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const submitBtn = form.querySelector('[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = "enviando… 💌";
+
+  try {
+    const data = new FormData(form);
+
+    await fetch(form.action, {
+      method: "POST",
+      body: data,
+      headers: { "Accept": "application/json" }
+    });
+
+    form.reset();
+    form.style.display = "none";
+    formSuccessState.style.display = "block";
+
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "enviar 💌";
+    alert("Ops, algo deu errado. Tenta de novo?");
+  }
+});
+
+const memories = [
+{
+    icon: "✨",
+    short: "Quando você esquecer o quanto é linda",
+    title: "Abra quando esquecer o quão linda é",
+    message: `Eu queria que você pudesse se ver por um instante do jeito que eu te vejo.
+
+Não é só sobre aparência, mesmo você sendo linda. É sobre o jeito que você existe no mundo, como fala, sorri, olha, admira, pensa e sente.
+
+Você tem algo muito especial, e o mais bonito é que isso simplesmente acontece, sem esforço.`
+},
+{
+    icon: "🌙",
+    short: "Quando você sentir que não é o bastante",
+    title: "Abra quando o mundo fizer você duvidar de si",
+    message: `Você não precisa dar conta de tudo para continuar sendo alguém incrível.
+
+Mesmo nos dias em que você duvida de si, ainda existe tanta coisa bonita em você. Seu jeito, sua presença, sua energia, sua história.
+
+Você importa muito mais do que talvez perceba.`
+},
+{
+    icon: "☀️",
+    short: "Pra te arrancar um sorriso",
+    title: "Abra quando precisar sorrir",
+    message: `Tem algo no seu olhar que traz um brilho especial para o mundo. Não sei explicar direito, só sei que é especial.
+
+E sim, eu sei que isso parece meio bobo...
+
+Mas algumas das coisas mais verdadeiras que a gente sente acabam soando assim mesmo, né?`
+},
+{
+    icon: "👀",
+    short: "Quero te lembrar do que eu vejo em você",
+    title: "Abra quando quiser saber o que eu vejo em você",
+    message: `Vejo alguém linda — mas não de um jeito comum.
+
+Vejo alguém com detalhes que ficam na cabeça. Um jeito único de falar, de reagir, de existir.
+
+Vejo o jeito como você tenta se esconder quando fica tímida… e como, mesmo assim, ainda consegue ser a coisa mais bonita ali.
+
+Vejo alguém que dá vontade de conhecer mais, cuidar mais e ter sempre por perto.`
+},
+{
+    icon: "🤍",
+    short: "Quando o dia estiver pesado",
+    title: "Abra quando estiver tendo um dia difícil",
+    message: `Ei… respira um pouquinho.
+
+Você não precisa resolver tudo agora. Não precisa estar bem o tempo todo. Não precisa carregar o mundo nas costas.
+
+Só queria que você lembrasse que você não está sozinha e que eu gosto muito de você — e me sinto especial por ter você aqui.`
+},
+{
+    icon: "⭐",
+    short: "Quando precisar de motivação",
+    title: "Abra quando estiver desmotivada",
+    message: `Se hoje estiver faltando motivação, tudo bem.
+
+Você não precisa estar sempre animada pra continuar. Vai no seu tempo, do seu jeito.
+
+Mas não esquece: cuidar de você também é uma forma de carinho — mesmo nos dias em que dá mais trabalho.
+
+E se em algum momento ficar difícil demais se motivar… não guarda só pra você. Pode vir até mim.`
+},
+{
+    icon: "♡",
+    short: "Quero um carinho",
+    title: "Abra quando quiser um carinho",
+    message: `Queria poder te dar um abraço daqueles bem apertados que fazem o mundo ficar quieto por alguns segundos.
+
+Mas enquanto isso não é possível... deixa eu te lembrar de uma coisa:
+
+Você é querida, admirável e muito especial pra mim. Nunca deixe de ser você mesma`
+},
+{
+    icon: "🎁",
+    short: "Um pequeno presente",
+    title: "Abra agora",
+    message: `Eu poderia ter esperado uma data especial para fazer isso.
+
+Mas achei mais bonito fazer do nada. Porque você não merece ser lembrada só em dias marcados.
+
+Você merece ser lembrada numa terça qualquer, no meio da rotina, sem motivo nenhum — só porque você merece.`
+}
+];
+
+const responses = [
+  /*{
+    id: 1,
+    topic: "💭 Quero desabafar",
+    title: "Recebi seu desabafo",
+    userMessage: `Nessas últimas semanas me sinto estranha, penso cada vez mais que não estou pronta para fazer 20 anos.
+
+      Quando mais nova, havia imaginado um destino diferente, que teria uma apartamento alugado, saberia dirigir e estaria mais realizada em relação ao profissional.
+
+      Meu sonho é ter uma casa própria, decorada e pensada por mim. Não sei se representa alguma insegurança ou algo do tipo.
+
+      A questão chave é: Não me sinto pronta. Eu preciso de mais tempo, quero curtir a adolescência que não tive, até mesmo a minha infância eu preciso aproveitar mais.
+
+      Não estou madura o suficiente para essa fase, não sei como agir.
+
+      Eu realmente me sinto insuficiente, e essa minha ansiedade me faz travar, assim caio em um ciclo onde fico me distraindo para não pensar em meu presente. ` ,
+
+    message: ` Li seu desabafo e consegui sentir exatamente o que você quis dizer.
+
+    Sinceramente, acho que o que mais pesa não é o número 20 em si, mas olhar para a vida e perceber que ela não aconteceu do jeito que você imaginou. Eu sei que isso machuca, porque a expectativa que a gente cria quando é mais novo vira uma cobrança gigante depois. Mas não ter conquistado tudo o que você planejou não significa que você está atrasada e nem que é insuficiente. A vida quase nunca segue o nosso roteiro.
+
+    Sobre sentir que não viveu a infância ou a adolescência como queria: esses momentos não têm prazo de validade. Você ainda pode resgatar e viver coisas leves, do seu jeito, sem precisar correr para provar nada a ninguém. E mesmo que você se sinta travada agora, não significa que está parada. Conseguir olhar para dentro, entender o que está sentindo e colocar isso em palavras já mostra uma maturidade enorme.
+
+    Tudo isso é pesado, e faz total sentido você estar exaurida. Mas você não precisa resolver a sua vida inteira hoje, nem ter todas as respostas agora. E, acima de tudo, você não precisa carregar esse peso sozinha.
+
+    Quando você quiser conversar, desabafar ou só ficar abraçada em silêncio, sem precisar explicar nada para o mundo, eu estou bem aqui. No seu tempo.
+    
+    `,
+    date: "24 de junho/2026",
+    time: "19:50",
+    responseStatus: "guarded"
+  },*/
+
+];
+
+function loadResponseStates() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("responseStates") || "{}");
+    console.log("📦 Carregando responseStates do localStorage:", saved);
+    
+    responses.forEach((response) => {
+      // Se não tem estado salvo, mantém "pending"
+      if (saved[response.id]) {
+        response.responseStatus = saved[response.id];
+        console.log(`✅ Response ${response.id} carregada do localStorage: ${response.responseStatus}`);
+      } else {
+        response.responseStatus = "pending";
+        console.log(`📝 Response ${response.id} inicializada como pending`);
+      }
+    });
+  } catch (e) {
+    console.error("❌ Erro ao carregar responseStates:", e);
+  }
+}
+
+function saveResponseState(responseId, status) {
+  try {
+    const saved = JSON.parse(localStorage.getItem("responseStates") || "{}");
+    saved[responseId] = status;
+    localStorage.setItem("responseStates", JSON.stringify(saved));
+  } catch {}
+}
+
+const openingPhrases = [
+"Hoje também é um bom dia para lembrar que você é especial.",
+"Esse cantinho continua aqui sempre que você precisar.",
+"Nem todo carinho precisa esperar uma data.",
+"Algumas pessoas merecem lembretes bonitos no meio da rotina.",
+"Tem dias em que a gente só precisa de um pouco de carinho.",
+"Você não precisa se esforçar para merecer cuidado.",
+"Às vezes, ser lembrada com carinho já muda o dia.",
+"Volta aqui sempre que o mundo parecer pesado demais.",
+"Você merece delicadeza até nos dias comuns.",
+"Estar com você sempre é um momento idílico",
+"Algumas coisas bonitas precisam ser ditas mais de uma vez.",
+"Não é exagero lembrar alguém do quanto ela importa.",
+"Talvez hoje você só precise respirar e receber um lembrete bom.",
+"Você é mais especial do que imagina nos dias em que duvida disso.",
+"Esse site é pequeno, mas foi feito com intenção.",
+"Que esse lembrete encontre você no momento certo.",
+"Você não precisa estar bem o tempo todo para continuar sendo incrível.",
+"Tem beleza no seu jeito de existir.",
+"Um carinho inesperado também é uma forma de cuidado.",
+"Quando esquecer, volta aqui. Eu deixei algumas verdades guardadas.",
+"Esse não é um presente de data marcada. É só um carinho no meio do caminho."
+];
+
+const startScreen = document.getElementById("startScreen");
+const choiceScreen = document.getElementById("choiceScreen");
+const cardScreen = document.getElementById("cardScreen");
+const finalScreen = document.getElementById("finalScreen");
+
+const startBtn = document.getElementById("startBtn");
+const readAllBtn = document.getElementById("readAllBtn");
+const surpriseBtn = document.getElementById("surpriseBtn");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+const backOptionsBtn = document.getElementById("backOptionsBtn");
+const restartBtn = document.getElementById("restartBtn");
+const backToChoicesFinalBtn = document.getElementById("backToChoicesFinalBtn");
+
+const choiceGrid = document.getElementById("choiceGrid");
+const openingPhrase = document.getElementById("openingPhrase");
+const memoryCard = document.getElementById("memoryCard");
+const cardKicker = document.getElementById("cardKicker");
+const cardTitle = document.getElementById("cardTitle");
+const cardMessage = document.getElementById("cardMessage");
+const counter = document.getElementById("counter");
+const modeLabel = document.getElementById("modeLabel");
+const progressFill = document.getElementById("progressFill");
+
+let currentResponseIndex = 0;
+const responseCard = document.getElementById("responseCard");
+const responseViewTabs = document.querySelectorAll("[data-response-view]");
+const responseContextPanel = document.getElementById("responseContextPanel");
+const responseReplyPanel = document.getElementById("responseReplyPanel");
+const responseTopic = document.getElementById("responseTopic");
+const responseTitle = document.getElementById("responseTitle");
+const responseUserMessage = document.getElementById("responseUserMessage");
+const responseMessage = document.getElementById("responseMessage");
+const responseDateTime = document.getElementById("responseDateTime");
+
+let currentIndex = 0;
+let sequenceMode = false;
+let responseView = "context";
+
+function setOpeningPhrase() {
+  const randomIndex = Math.floor(Math.random() * openingPhrases.length);
+  openingPhrase.textContent = openingPhrases[randomIndex];
+}
+
+function showScreen(screen) {
+  const current = [startScreen, choiceScreen, cardScreen, finalScreen, formScreen, secretScreen, responsesListScreen, responseDetailScreen]
+    .find(s => s.classList.contains("active"));
+
+  if (current && current !== screen) {
+    current.classList.add("leaving");
+    setTimeout(() => {
+      current.classList.remove("active", "leaving");
+      screen.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 210);
+  } else {
+    [startScreen, choiceScreen, cardScreen, finalScreen, formScreen, secretScreen, responsesListScreen, responseDetailScreen]
+      .forEach(s => s.classList.remove("active", "leaving"));
+    screen.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+function getReadSet() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem("readCards") || "[]"));
+  } catch { return new Set(); }
+}
+
+function markAsRead(index) {
+  const read = getReadSet();
+  read.add(index);
+  try { localStorage.setItem("readCards", JSON.stringify([...read])); } catch {}
+}
+
+function renderChoices() {
+  const readSet = getReadSet();
+  choiceGrid.innerHTML = memories.map((memory, index) => `
+    <button class="choice-card${readSet.has(index) ? " read" : ""}" type="button" data-index="${index}">
+      <div class="choice-icon">${memory.icon}</div>
+      <span>lembrete ${String(index + 1).padStart(2, "0")}</span>
+      <strong>${memory.short}</strong>
+    </button>
+  `).join("");
+
+  choiceGrid.querySelectorAll(".choice-card").forEach((button) => {
+    button.addEventListener("click", () => {
+      sequenceMode = false;
+      openCard(Number(button.dataset.index));
+    });
+  });
+}
+
+function renderCard() {
+  const memory = memories[currentIndex];
+  const number = String(currentIndex + 1).padStart(2, "0");
+
+  cardKicker.textContent = `${memory.icon} lembrete ${number}`;
+  cardTitle.textContent = memory.title;
+  cardMessage.textContent = memory.message;
+  counter.textContent = `${currentIndex + 1} de ${memories.length}`;
+  modeLabel.textContent = sequenceMode ? "lendo em sequência" : "lembrete escolhido";
+  progressFill.style.width = `${((currentIndex + 1) / memories.length) * 100}%`;
+
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.textContent = currentIndex === memories.length - 1
+      ? (sequenceMode ? "abrir último lembrete" : "voltar às opções")
+      : "próximo lembrete";
+
+  memoryCard.style.animation = "none";
+  memoryCard.offsetHeight;
+  memoryCard.style.animation = "cardIn 560ms ease both";
+}
+
+function openCard(index) {
+  currentIndex = index;
+  markAsRead(index);
+  renderCard();
+  showScreen(cardScreen);
+  setTimeout(() => {
+    memoryCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, 260);
+}
+
+function openChoices() {
+  renderChoices();
+  showScreen(choiceScreen);
+}
+
+startBtn.addEventListener("click", () => {
+  openChoices();
+});
+
+readAllBtn.addEventListener("click", () => {
+  sequenceMode = true;
+  openCard(0);
+});
+
+surpriseBtn.addEventListener("click", () => {
+  sequenceMode = false;
+  const randomIndex = Math.floor(Math.random() * memories.length);
+  openCard(randomIndex);
+});
+
+nextBtn.addEventListener("click", () => {
+  if (currentIndex < memories.length - 1) {
+    currentIndex += 1;
+    renderCard();
+    return;
+  }
+
+  if (sequenceMode) {
+    showScreen(finalScreen);
+  } else {
+    openChoices();
+  }
+});
+
+prevBtn.addEventListener("click", () => {
+  if (currentIndex > 0) {
+    currentIndex -= 1;
+    renderCard();
+  }
+});
+
+backOptionsBtn.addEventListener("click", () => {
+  sequenceMode = false;
+  openChoices();
+});
+
+restartBtn.addEventListener("click", () => {
+  sequenceMode = true;
+  openCard(0);
+});
+
+backToChoicesFinalBtn.addEventListener("click", () => {
+  sequenceMode = false;
+  openChoices();
+});
+
+function getResponsePreview(text, maxLength = 132) {
+  const compact = text.replace(/\s+/g, " ").trim();
+  return compact.length > maxLength ? `${compact.slice(0, maxLength - 1).trimEnd()}…` : compact;
+}
+
+function setResponseView(view) {
+  responseView = view;
+
+  responseViewTabs.forEach((button) => {
+    const active = button.dataset.responseView === view;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", String(active));
+    button.tabIndex = active ? 0 : -1;
+  });
+
+  responseContextPanel.classList.toggle("active", view === "context");
+  responseReplyPanel.classList.toggle("active", view === "reply");
+
+  // Aplicar estado correto da resposta quando muda para a aba de resposta
+  if (view === "reply") {
+    const response = responses[currentResponseIndex];
+    const messageElement = document.getElementById("responseMessage");
+    
+    if (!messageElement) {
+      console.error("❌ responseMessage element não encontrado");
+      return;
+    }
+
+    if (response.responseStatus === "pending") {
+      // Ainda não decidiu - mostra overlay
+      messageElement.classList.add("locked");
+      setTimeout(() => {
+        showResponseDecisionOverlay();
+      }, 100);
+    } else if (response.responseStatus === "guarded") {
+      // Escolheu "Queria apenas falar" - mantém bloqueada
+      messageElement.classList.add("locked");
+    } else if (response.responseStatus === "viewed") {
+      // Escolheu "Ver resposta" - libera
+      messageElement.classList.remove("locked");
+    }
+  } else {
+    // Ao voltar para "Mensagem dela", remove o bloqueio visual
+    const messageElement = document.getElementById("responseMessage");
+    if (messageElement) {
+      messageElement.classList.remove("locked");
+    }
+  }
+}
+
+function showResponseDecisionOverlay() {
+  const response = responses[currentResponseIndex];
+  const replyPanel = document.getElementById("responseReplyPanel");
+  
+  // Verifica se já existe um overlay
+  if (replyPanel.querySelector(".response-choice-overlay")) {
+    return;
+  }
+
+  // Bloqueia o conteúdo da resposta enquanto há decisão
+  const messageElement = document.getElementById("responseMessage");
+  if (messageElement) {
+    messageElement.classList.add("locked");
+  }
+
+  const overlay = document.createElement("div");
+  overlay.className = "response-choice-overlay";
+  overlay.innerHTML = `
+    <div class="response-choice-content">
+      <p class="response-choice-text">
+        Quer conhecer minha resposta para isso?
+      </p>
+      <div class="response-choice-btns">
+        <button class="btn-yes-response" type="button">💜 Ver resposta</button>
+        <button class="btn-no-response" type="button">Queria apenas falar</button>
+      </div>
+    </div>
+  `;
+  
+  replyPanel.appendChild(overlay);
+
+  const [btnYes, btnNo] = overlay.querySelectorAll("button");
+
+  btnYes.addEventListener("click", () => {
+    response.responseStatus = "viewed";
+    saveResponseState(response.id, "viewed");
+    // Libera a resposta
+    if (messageElement) {
+      messageElement.classList.remove("locked");
+    }
+    overlay.remove();
+  });
+
+  btnNo.addEventListener("click", () => {
+    response.responseStatus = "guarded";
+    saveResponseState(response.id, "guarded");
+    // Mostra mensagem de confirmação mas mantém bloqueado
+    overlay.innerHTML = `
+      <div class="response-choice-content">
+        <p class="response-guarded-msg">✓ Estarei sempre aqui para ouvir. 💜</p>
+      </div>
+    `;
+    // Depois volta para a lista
+    setTimeout(() => {
+      openResponsesList();
+    }, 2000);
+  });
+}
+
+function renderResponsesList() {
+  if (!responsesContainer) {
+    return;
+  }
+
+  if (responses.length === 0) {
+    responsesContainer.innerHTML = `
+      <div class="no-responses">
+        <div class="no-responses-icon">💬</div>
+        <p>Ainda não há respostas. Mas em breve, quando você enviar uma mensagem, eu respondo aqui. 🤍</p>
+      </div>
+    `;
+    return;
+  }
+
+  responsesContainer.innerHTML = `
+    <div class="responses-grid" id="responsesGrid">
+      ${responses.map((response, index) => `
+        <button class="response-card-item" type="button" data-response-index="${index}">
+          <span class="response-card-tag">${response.topic}</span>
+          <strong>${response.title}</strong>
+          <p class="response-preview">${getResponsePreview(response.userMessage)}</p>
+          <div class="response-card-meta">
+            <span>${response.date} · ${response.time}</span>
+            <strong>abrir carta</strong>
+          </div>
+        </button>
+      `).join("")}
+    </div>
+  `;
+
+  document.querySelectorAll(".response-card-item").forEach((button) => {
+    button.addEventListener("click", () => {
+      openResponseDetail(Number(button.dataset.responseIndex));
+    });
+  });
+}
+
+function renderResponseDetail() {
+  const response = responses[currentResponseIndex];
+
+  responseTopic.textContent = response.topic;
+  responseTitle.textContent = response.title;
+  responseUserMessage.textContent = response.userMessage;
+  responseMessage.textContent = response.message;
+  responseDateTime.textContent = `${response.date} às ${response.time}`;
+
+  // Limpa as classes de bloqueio antes de renderizar
+  const messageElement = document.getElementById("responseMessage");
+  if (messageElement) {
+    messageElement.classList.remove("locked");
+  }
+
+  setResponseView(responseView);
+
+  responseCard.style.animation = "none";
+  responseCard.offsetHeight;
+  responseCard.style.animation = "cardIn 560ms ease both";
+}
+
+function openResponseDetail(index) {
+  currentResponseIndex = index;
+  
+  // Limpa o estado anterior
+  const messageElement = document.getElementById("responseMessage");
+  if (messageElement) {
+    messageElement.classList.remove("locked");
+  }
+  
+  setResponseView("context");
+  renderResponseDetail();
+  showScreen(responseDetailScreen);
+  setTimeout(() => {
+    responseCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, 260);
+}
+
+function openResponsesList() {
+  loadResponseStates();
+  renderResponsesList();
+  showScreen(responsesListScreen);
+}
+
+responseViewTabs.forEach((button) => {
+  button.addEventListener("click", () => {
+    setResponseView(button.dataset.responseView);
+  });
+});
+
+floatingResponsesBtn.addEventListener("click", () => {
+  openResponsesList();
+});
+
+backFromResponsesList.addEventListener("click", () => {
+  showScreen(startScreen);
+});
+
+backFromResponseDetailBtn.addEventListener("click", () => {
+  openResponsesList();
+});
+
+function updateResponseBadge() {
+  if (responses.length > 0) {
+    responseBadge.textContent = responses.length;
+    responseBadge.style.display = "flex";
+  } else {
+    responseBadge.style.display = "none";
+  }
+}
+
+// ── FUNÇÃO DE RESET PARA DEBUG ──
+window.resetAllResponseStates = function() {
+  localStorage.removeItem("responseStates");
+  responses.forEach(response => {
+    response.responseStatus = "pending";
+  });
+  console.log("✅ Todos os estados foram resetados para 'pending'");
+  console.log("🔄 Recarregue a página (F5) para aplicar as mudanças");
+};
+
+window.requestAllToViewable = function() {
+  responses.forEach(response => {
+    response.responseStatus = "pending";
+  });
+  localStorage.removeItem("responseStates");
+  console.log("✅ Todas as respostas estão como 'pending' novamente");
+};
+
+window.requestToView = function(responseId) {
+  responses.forEach(response => {
+    if (response.id === responseId) {
+      response.responseStatus = "pending";
+    }
+  });
+  const saved = JSON.parse(localStorage.getItem("responseStates") || "{}");
+  delete saved[responseId];
+  localStorage.setItem("responseStates", JSON.stringify(saved));
+  console.log(`✅ Resposta ${responseId} resetada para 'pending'`);
+};
+
+console.log("%c🔧 COMMANDS DE DEBUG DISPONÍVEIS:", "color: #7c3aed; font-weight: bold;");
+console.log("%cresponses - Ver todas as respostas e seus estados", "color: #a855f7;");
+console.log("%cresetAllResponseStates() - Resetar TODAS para 'pending'", "color: #a855f7;");
+console.log("%crequestToView(1) - Resetar resposta 1 para 'pending'", "color: #a855f7;");
+
+setOpeningPhrase();
+renderChoices();
+loadResponseStates();
+updateResponseBadge();
+
+const specialBanner = document.getElementById("specialBanner");
+
+function checkVisitAndDates() {
+  let visits = 0;
+  try { visits = parseInt(localStorage.getItem("visitCount") || "0") + 1; } catch {}
+  try { localStorage.setItem("visitCount", visits); } catch {}
+
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+
+  const specialDates = [
+    { month: 11,  day: 8, msg: "✨ Feliz aniversário! Que esse dia seja tão bonito quanto você merece. 🎂" },
+    { month: 3, day: 29, msg: "💜 Faz exatos 1 ano que tive o prazer de sentir sua boca na minha. Espero que venha mais anos por ai...." },
+  ];
+
+  const todaySpecial = specialDates.find(d => d.month === month && d.day === day);
+
+  const visitMessages = {
+    10: "Dez vezes aqui. Esse lugar existe por você. 💜",
+    20: "Vinte visitas. Você merece um abraço imenso e muitos beijos. 🫂",
+    50: "Cinquenta vezes. Obrigado por sempre voltar. ♡",
+  };
+
+  if (todaySpecial) {
+    specialBanner.textContent = todaySpecial.msg;
+    specialBanner.classList.add("show");
+  } else if (visitMessages[visits]) {
+    specialBanner.textContent = visitMessages[visits];
+    specialBanner.classList.add("show");
+  }
+}
+
+checkVisitAndDates();
+
+const photos = document.querySelectorAll(".photo-carousel img");
+let photoIndex = 0;
+
+function showNextPhoto() {
+  if (!photos.length) return;
+
+  photos.forEach(p => p.classList.remove("active"));
+  photos[photoIndex].classList.add("active");
+
+  photoIndex = (photoIndex + 1) % photos.length;
+}
+
+setInterval(showNextPhoto, 5000);
+showNextPhoto();
+
+const moodSelector = document.getElementById("moodSelector");
+const moodValue = document.getElementById("moodValue");
+const wantsResponseToggle = document.getElementById("wantsResponseToggle");
+const wantsResponseValue = document.getElementById("wantsResponseValue");
+
+moodSelector.querySelectorAll(".mood-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    moodSelector.querySelectorAll(".mood-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    moodValue.value = btn.dataset.value;
+  });
+});
+
+wantsResponseToggle.addEventListener("change", () => {
+  wantsResponseValue.value = wantsResponseToggle.checked ? "sim" : "não";
+});
+
+const secretBtn = document.getElementById("secretBtn");
+secretBtn.addEventListener("click", () => {
+  openPasswordModal();
+});
 
   </script>
 
